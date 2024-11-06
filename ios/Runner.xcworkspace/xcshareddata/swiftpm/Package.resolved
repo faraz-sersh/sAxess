@@ -1,0 +1,24 @@
+{
+  "originHash" : "cd096e39121c80b15982bbe18d13253a69f5960c2ce76a1156945c97904965e5",
+  "pins" : [
+    {
+      "identity" : "bigint",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/attaswift/BigInt",
+      "state" : {
+        "revision" : "793a7fac0bfc318e85994bf6900652e827aef33e",
+        "version" : "5.4.1"
+      }
+    },
+    {
+      "identity" : "swiftkeccak",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bitflying/SwiftKeccak.git",
+      "state" : {
+        "revision" : "5fc323d4b08a8c77cbb690505445b32a3b5a8aff",
+        "version" : "0.1.2"
+      }
+    }
+  ],
+  "version" : 3
+}

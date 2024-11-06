@@ -1,0 +1,530 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+// swift-module-flags: -target arm64-apple-ios13.3 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name SDK
+import CommonCrypto
+import CoreAudioTypes
+import CoreData
+import CoreNFC
+import CryptoKit
+import Foundation
+@_exported import SDK
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import os.log
+import os
+public class SourceTrace {
+  public init(stacktrace: [Swift.String], file: Swift.String, method: Swift.String, line: Swift.Int)
+  public func getMethodName() -> Swift.String
+  public func getFile() -> Swift.String
+  public func printStacktrace()
+  @objc deinit
+}
+open class RuntimeError : Foundation.LocalizedError {
+  public init(_ message: Swift.String, file: Swift.String = #file, method: Swift.String = #function, line: Swift.Int = #line)
+  public var errorDescription: Swift.String? {
+    get
+  }
+  public func printStacktrace(fullStacktrace: Swift.Bool = false)
+  public func format(_ args: any Swift.CVarArg...) -> SDK.RuntimeError
+  public func format(_ args: Swift.String) -> SDK.RuntimeError
+  public func format(_ args: Swift.Int) -> SDK.RuntimeError
+  @objc deinit
+}
+@_inheritsConvenienceInitializers open class RuntimeException : SDK.RuntimeError {
+  override public init(_ message: Swift.String, file: Swift.String = #file, method: Swift.String = #function, line: Swift.Int = #line)
+  @objc deinit
+}
+extension Swift.Error {
+  public func printStacktrace()
+}
+public enum ErrorMessage : Swift.String {
+  case NO_CARD_DETECTED
+  case CARD_RESPONSE_NOT_FOUND
+  case WRONG_AID_LENGTH
+  case APPLET_NOT_FOUND
+  case NOT_CONNECTED
+  case VERIFY_BIO_TIMEOUT
+  case VERIFY_BIO_NO_TEMPLATE
+  case TECHNICAL_ERROR
+  case VERIFY_BIO_BLOCKED
+  case VERIFY_PASSPHRASE_BLOCKED
+  case VERIFY_PASSPHRASE_WRONG
+  case PASSPHRASE_NOT_VALIDATED
+  case SECURITY_STATUS_NOT_SATISFIED
+  case FINGER_ALREADY_REGISTERED
+  case SENSOR_ERROR
+  case BAD_FINGER_ID
+  case FINGER_NOT_FOUND
+  case VERIFY_PUK_WRONG_LENGTH
+  case VERIFY_PUK_NOT_PERSONALIZED
+  case VERIFY_PUK_BLOCKED
+  case VERIFY_PUK_WRONG
+  case MISSING_INPUT_DATA
+  case KEY_NOT_INIT
+  case WRONG_TAG_LENGTH
+  case WRONG_PASSPHRASE_LENGTH
+  case WRONG_HAND
+  case WRONG_FINGER
+  case DATA_NOT_FOUND_IN_RESPONSE
+  case PASSPHRASE_NOT_VERIFIED
+  case SM_NOT_SUPPORTED
+  case FUNCTION_NOT_SUPPORTED
+  case TAG_NOT_FOUND_FORMAT
+  case MISSING_APPLET_DATA
+  case WRONG_UNIQUE_ID
+  case INCORRECT_SESSION_DATA_FORMAT
+  case DATA_WRONG_SIZE
+  case SECURE_CHANNEL_NOT_INIT
+  case AUTHENTICATION_FAILED
+  case BIOMETRY_BLOCKED
+  case BIOMETRY_NOT_SUPPORTED
+  case WRONG_PIN_FORMAT
+  case DATA_NOT_FOUND
+  case NOT_ENOUGH_MEMORY
+  case BIOMETRY_FAILED_COUNTER
+  case CONDITION_OF_USE_NOT_OK
+  case CARD_ID_NOT_FOUND
+  case WRONG_CARD_SECURITY_DATA
+  case CANNOT_PARSE_SIGNED_DATA
+  case RMAC_WRONG_CARD_RESPONSE_LENGTH
+  case RMAC_WRONG
+  case KEY_NOT_FOUND_FORMAT
+  case CANNOT_LOAD_KEYSET_FILE
+  case SM_CARD_CRYPTOGRAM_WRONG
+  case DATAFILE_NOT_FOUND
+  case MISSING_SECURITY_DATA_CARD
+  case SM_CARD_CRYPTOGRAM_CHECK_FAILS_FORMAT
+  case MISSING_SECURITY_DATA_HOST
+  case SM_HOST_CRYPTOGRAM_CHECK_FAILS_FORMAT
+  case HASH_TOO_BIG
+  case ROOTED_DEVICE
+  case SEED_TOO_SMALL
+  case SEED_TOO_BIG
+  case CANNOT_PARSE_BIP_PATH
+  case EMPTY_BIP_PATH
+  case SEED_NOT_FOUND
+  case CANNOT_CREATE_TRANSACTION_DATA
+  case CARD_NOT_PAIRED
+  case CARD_ALREADY_PAIRED
+  case WRONG_ECDH_PUBLIC_SIZE
+  case PUBLIC_KEY_NOT_INIT
+  case WRONG_PAIRING_ID
+  case NOT_ENOUGH_POWER
+  case NO_PUBLIC_KEY_IN_CARD
+  case FAILS_TO_CHECK_PIN
+  case BIOMETRY_OR_PIN_BLOCKED
+  case BIOMETRY_OR_PIN_FAILED_FORMAT
+  case FAILS_PARSE_SCP03
+  case WRONG_PIN_DATA
+  case CONNECTION_NOT_STARTED
+  case KEY_CONFIRM_CHECK_FAILS
+  case SECURITY_PROVIDER_NOT_INIT
+  case ATTESTATION_NOT_VALID
+  case CANNOT_PERFORM_KDF
+  case CANNOT_GENERATE_SSEPH
+  case WRONG_CLASS
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum KeyId {
+  case ENC, MAC, RMAC, CardSerialNumber, PairingId, SharedSecret, PublicKey
+  public static func == (a: SDK.KeyId, b: SDK.KeyId) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol IKeyProvider {
+  func isKeyExist(cardUniqueId: Swift.String) -> Swift.Bool
+  func getKey(keyId: SDK.KeyId) throws -> Foundation.Data
+  func addKeySet(cardUniqueId: Swift.String, keySet: [SDK.KeyId : Foundation.Data]) throws
+  func removeKeySet(cardUniqueId: Swift.String) throws
+  func selectKeySet(cardUniqueId: Swift.String) throws
+}
+@_hasMissingDesignatedInitializers open class Constants {
+  public static func bundle(clazz: Any) -> Foundation.Bundle
+  @objc deinit
+}
+public class SDKException : SDK.RuntimeError {
+  public init(message: SDK.ErrorMessage, code: SDK.ErrorCode, statusCode: Swift.String, file: Swift.String = #file, method: Swift.String = #function, line: Swift.Int = #line)
+  public init(message: SDK.ErrorMessage, code: SDK.ErrorCode, file: Swift.String = #file, method: Swift.String = #function, line: Swift.Int = #line)
+  public init(message: Swift.String, code: SDK.ErrorCode, statusCode: Swift.String = "", file: Swift.String = #file, method: Swift.String = #function, line: Swift.Int = #line)
+  public init(message: Swift.String, file: Swift.String = #file, method: Swift.String = #function, line: Swift.Int = #line)
+  public func getMessage() -> Swift.String
+  public func getCode() -> Swift.String
+  public func getStatusCode() -> Swift.String
+  public static func parse(code: Swift.String, file: Swift.String = #file, method: Swift.String = #function, line: Swift.Int = #line) -> SDK.SDKException
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class AESHelper {
+  public static func generateAESKey(length: SDK.CryptoLength) throws -> Foundation.Data
+  public static func generateIv(length: SDK.CryptoLength) throws -> Foundation.Data
+  public static func hashKey(key: Foundation.Data, length: SDK.CryptoLength) -> Foundation.Data
+  public static func encrypt(data: Foundation.Data, iv: Foundation.Data, key: Foundation.Data, algorithm: SDK.SymmetricAlgorithm) throws -> Foundation.Data
+  public static func decrypt(data: Foundation.Data, iv: Foundation.Data, key: Foundation.Data, algorithm: SDK.SymmetricAlgorithm) throws -> Foundation.Data
+  @objc deinit
+}
+public protocol CardDetector {
+  func startDetector(_ callback: any SDK.CardDetectorCallback, startMessage: Swift.String)
+  func stopDetector()
+  func isCardDetected() -> Swift.Bool
+}
+public protocol CardDetectorCallback {
+  func onCardDetected(_ communication: any SDK.ICommunication)
+  func onCardRemoved()
+}
+public class AnonymCardDectectorCallback : SDK.CardDetectorCallback {
+  public init(callbackOnCardDetected: ((_ communication: any SDK.ICommunication) -> ())?, callbackOnCardRemoved: (() -> ())?)
+  public func onCardDetected(_ communication: any SDK.ICommunication)
+  public func onCardRemoved()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class BchainPhase2Manager : SDK.BchainManager {
+  public init(communication: any SDK.ICommunication) throws
+  override public func connect() throws
+  override public func getCardUniqueId() throws -> Swift.String
+  override public func getCardStatus() throws -> SDK.CardStatus
+  override public func verifyPin(_ pin: Swift.String) throws
+  override public func changePin(newPin: Swift.String) throws
+  override public func initializeSeed(seed: Foundation.Data) throws
+  override public func getPublicKey(bipPath: Swift.String, withChainCode: Swift.Bool, compressedKey: Swift.Bool) throws -> Foundation.Data
+  override public func signMessageHash(bipPath: Swift.String, messageHash: Foundation.Data) throws -> SDK.SignedData
+  override public func verifySignature(bipPath: Swift.String, messageHash: Foundation.Data, signature: SDK.SignedData) throws -> Swift.Bool
+  override public func updateUserAuthenticationRule(userAuthenticationRule: Swift.Int) throws
+  override public func getUserAuthenticationRule() throws -> Swift.Int
+  override public func isCardPaired() throws -> Swift.Bool
+  override public func pairCard(pin: Swift.String) throws
+  override public func unpairCard() throws
+  override public func deleteFingerprints() throws
+  @objc deinit
+}
+public class SDKCounterException : SDK.SDKException {
+  public init(message: SDK.ErrorMessage, cardStatus: Swift.String, file: Swift.String = #file, method: Swift.String = #function, line: Swift.Int = #line)
+  public func getCounter() -> Swift.Int
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class Base64 {
+  public static func encode(_ bytes: Foundation.Data) throws -> Swift.String
+  public static func decode(_ base64: Swift.String) throws -> Foundation.Data
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class CardAttestation {
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class SDKSettings {
+  public static var APPLET_AID: Swift.String
+  public static var KEYSET: Swift.Int
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class CryptoHelper {
+  public static func hashTransaction(_ encodedTransaction: Foundation.Data) -> Foundation.Data
+  public static func recoverPublicKey(hash: Foundation.Data, signature: SDK.SignedData) throws -> Foundation.Data
+  public static func fixSignature(signature: SDK.SignedData) -> SDK.SignedData
+  public static func fixSignature(v: Foundation.Data, r: Foundation.Data, s: Foundation.Data) -> SDK.SignedData
+  public static func trimPublicKey(publicKey: Foundation.Data) -> Foundation.Data
+  public static func publicKeyToAddress(publicKey: Foundation.Data) -> Foundation.Data
+  public static func generateSeedFromMnemonic(mnemonic: Swift.String, passphrase: Swift.String = "") throws -> Foundation.Data
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers open class SDKLog {
+  public static var LOG_ENABLED: Swift.Bool
+  public static var COLORED_LEVEL: Swift.Bool
+  public static var FILE_LOGS_ENABLED: Swift.Bool
+  public static func logVerbose(_ log: Swift.String)
+  public static func logDebug(_ log: Swift.String)
+  public static func logInfo(_ log: Swift.String)
+  public static func logWarn(_ log: Swift.String)
+  public static func logError(_ log: Swift.String)
+  @objc deinit
+}
+open class SecureEnclaceManager {
+  public init()
+  public func checkSecureEnclaveAvailable() throws
+  public func createPrivateKey(name: Swift.String) throws -> Security.SecKey
+  public func isKeyAvailable(name: Swift.String) -> Swift.Bool
+  public func getPrivateKey(name: Swift.String) throws -> Security.SecKey
+  public func getPublicKey(privateKey: Security.SecKey) throws -> Security.SecKey
+  public func encrypt(_ data: Foundation.Data, publicKey: Security.SecKey) throws -> Foundation.Data
+  public func decrypt(_ encryptedData: Foundation.Data, privateKey: Security.SecKey) throws -> Foundation.Data
+  public func sign(privateKey: Security.SecKey, algorithm: Security.SecKeyAlgorithm = .eciesEncryptionCofactorVariableIVX963SHA256AESGCM, data: Foundation.Data) throws -> Foundation.Data
+  public func verify(publicKey: Security.SecKey, algorithm: Security.SecKeyAlgorithm = .eciesEncryptionCofactorVariableIVX963SHA256AESGCM, signature: Foundation.Data, message: Foundation.Data) throws -> Swift.Bool
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class HashHelper {
+  public static func SHA(_ data: Foundation.Data, length: SDK.CryptoLength) -> Foundation.Data
+  public static func SHA256(_ data: Foundation.Data) -> Foundation.Data
+  public static func SHA512(_ data: Foundation.Data) -> Foundation.Data
+  public static func SHA1(_ data: Foundation.Data) -> Foundation.Data
+  public static func MD5(_ data: Foundation.Data) -> Foundation.Data
+  public static func pbkdf2SHA1(password: Swift.String, salt: Foundation.Data, rounds: Swift.Int) -> Foundation.Data
+  public static func pbkdf2SHA256(password: Swift.String, salt: Foundation.Data, rounds: Swift.Int) -> Foundation.Data
+  public static func pbkdf2SHA512(password: Swift.String, salt: Foundation.Data, rounds: Swift.Int) -> Foundation.Data
+  @objc deinit
+}
+public enum CryptoLength : Swift.Int {
+  case _128bit
+  case _192bit
+  case _256bit
+  case _512bit
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public class SignedData {
+  public init(raw: Foundation.Data) throws
+  public init(r: Foundation.Data, s: Foundation.Data, v: Foundation.Data)
+  public func getRaw() -> Foundation.Data
+  public func getR() -> Foundation.Data
+  public func getS() -> Foundation.Data
+  public func getTy() -> Foundation.Data
+  public func getV() -> Foundation.Data
+  public func getV(forChainId: Swift.Int64) -> Foundation.Data
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class FileHelper {
+  public static func hashUrl(_ url: Swift.String) -> Swift.String
+  public static func isFileExist(fileName: Swift.String, fromCache: Swift.Bool = false) -> Swift.Bool
+  public static func createDirectoryIfNotExists(directoryName: Swift.String, fromCache: Swift.Bool = false) throws
+  public static func createFileIfNotExists(fileName: Swift.String, fromCache: Swift.Bool = false) throws
+  public static func save(data: Swift.String, fileName: Swift.String, fromCache: Swift.Bool = false) throws
+  public static func save(data: Foundation.Data, fileName: Swift.String, fromCache: Swift.Bool = false) throws
+  public static func loadString(fileName: Swift.String, fromCache: Swift.Bool = false) throws -> Swift.String
+  public static func loadData(fileName: Swift.String, fromCache: Swift.Bool = false) throws -> Foundation.Data
+  public static func deleteFile(path: Swift.String, fromCache: Swift.Bool = false) throws
+  @objc deinit
+}
+public class DataWaiter<T> {
+  public init()
+  public func waitForData(_ timeoutMillis: Swift.Int) throws -> T?
+  public func setData(_ data: T?)
+  public func setError(_ error: any Swift.Error)
+  public func reset()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class Bytes {
+  public static func concat(_ datas: Foundation.Data...) -> Foundation.Data
+  public static func random(size: Swift.Int) -> Foundation.Data
+  @objc deinit
+}
+public enum SymmetricAlgorithm {
+  case AES_CBC_PKCS7Padding
+  case AES_ECB_PKCS7Padding
+  case AES_CBC_NoPadding
+  case AES_ECB_NoPadding
+  public static func == (a: SDK.SymmetricAlgorithm, b: SDK.SymmetricAlgorithm) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13.0, *)
+public class NFCHelper : ObjectiveC.NSObject, SDK.CardDetector {
+  final public let COMMUNICATION_TIMEOUT: Swift.Double
+  public static func getInstance() -> SDK.NFCHelper
+  public func waitForCommunication(startMessage: Swift.String = "Put the card behind the iPhone", callback: ((any SDK.ICommunication) -> ())?)
+  public func waitForCommunication(timeoutMillis: Swift.Int, startMessage: Swift.String = "Put the card behind the iPhone") throws -> any SDK.ICommunication
+  public func startDetector(_ callback: any SDK.CardDetectorCallback, startMessage: Swift.String = "Put the card behind the iPhone")
+  public func stopDetector()
+  public func stopDetector(successMessage: Swift.String)
+  public func stopDetector(errorMessage: Swift.String)
+  public func isCardDetected() -> Swift.Bool
+  public func showMessage(_ title: Swift.String)
+  @objc deinit
+}
+extension SDK.NFCHelper : CoreNFC.NFCTagReaderSessionDelegate {
+  public func tagReaderSessionDidBecomeActive(_ session: CoreNFC.NFCTagReaderSession)
+  public func readerSessionDidBecomeActive(_ session: CoreNFC.NFCReaderSession)
+  public func tagReaderSession(_ session: CoreNFC.NFCTagReaderSession, didInvalidateWithError error: any Swift.Error)
+  public func tagReaderSession(_ session: CoreNFC.NFCTagReaderSession, didDetect tags: [CoreNFC.NFCTag])
+}
+public class PrivateKeySet {
+  public init(publicKey: Security.SecKey, privateKey: Security.SecKey)
+  public func getPublicKey() -> Security.SecKey
+  public func getPrivateKey() -> Security.SecKey
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class EcdhHelper {
+  public static func loadSecKey(isPublic: Swift.Bool, data: Foundation.Data) throws -> Security.SecKey
+  public static func generateParams(bitKeySize: Swift.Int = 256, keyType: Swift.String = kSecAttrKeyTypeECSECPrimeRandom as String) -> CoreFoundation.CFDictionary
+  public static func generateKeySet(attrs: CoreFoundation.CFDictionary) throws -> SDK.PrivateKeySet
+  public static func buildSharedKey(privateKey: Security.SecKey, publicKey: Security.SecKey, attrs: CoreFoundation.CFDictionary) throws -> Foundation.Data
+  public static func verify(publicKey: Security.SecKey, message: Foundation.Data, signature: Foundation.Data) -> Swift.Bool
+  public static func verify(publicKey: Foundation.Data, message: Foundation.Data, r: Foundation.Data, s: Foundation.Data) -> Swift.Bool
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class BchainManager {
+  public static func build(communication: any SDK.ICommunication) throws -> SDK.BchainManager
+  public func connect() throws
+  public func getCardStatus() throws -> SDK.CardStatus
+  public func isCardPaired() throws -> Swift.Bool
+  public func pairCard(pin: Swift.String) throws
+  public func unpairCard() throws
+  public func deleteFingerprints() throws
+  public func getCardUniqueId() throws -> Swift.String
+  public func getCardStatus(field: SDK.CardStatus.Field) throws -> Any
+  public func verifyPin(_ pin: Swift.String) throws
+  public func changePin(newPin: Swift.String) throws
+  public func initializeSeed(seed: Foundation.Data) throws
+  public func getPublicKey(bipPath: Swift.String, withChainCode: Swift.Bool, compressedKey: Swift.Bool) throws -> Foundation.Data
+  public func signMessageHash(bipPath: Swift.String, messageHash: Foundation.Data) throws -> SDK.SignedData
+  public func verifySignature(bipPath: Swift.String, messageHash: Foundation.Data, signature: SDK.SignedData) throws -> Swift.Bool
+  public func updateUserAuthenticationRule(userAuthenticationRule: Swift.Int) throws
+  public func getUserAuthenticationRule() throws -> Swift.Int
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class JsonHelper {
+  public static func toJson(dict: Swift.Dictionary<Swift.String, Any>) throws -> Swift.String
+  public static func toDictionary(json: Swift.String) throws -> Swift.Dictionary<Swift.String, Any>
+  @objc deinit
+}
+public enum ErrorCode : Swift.String {
+  case CONNECTION_ERROR
+  case CARD_NOT_COMPATIBLE
+  case CARD_ERROR
+  case COUNTER_ERROR
+  case TIMEOUT
+  case INTERNAL_ERROR
+  case UNEXPECTED_CARD_RESPONSE
+  case WRONG_INPUT
+  case CHECK_FAIL
+  case SECURITY_CHECK_FAIL
+  case LIMIT_REACHED
+  case DECLINED
+  case NOT_FOUND
+  case CANCELLED
+  case ALREADY_EXIST
+  case BLOCKED
+  case CONNECTION_REQUIRED
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class SECP256K1Helper {
+  public static func recoverPublicKey(hash: Foundation.Data, signature: SDK.SignedData) throws -> Foundation.Data
+  @objc deinit
+}
+public class Tlv {
+  public init(tag: Foundation.Data, length: Swift.Int, data: Foundation.Data)
+  public init(tag: Foundation.Data, data: Foundation.Data)
+  public func getTag() -> Foundation.Data
+  public func getStringTag() -> Swift.String
+  public func getLength() -> Swift.Int
+  public func getBytesLength() -> Foundation.Data
+  public func getData() -> Foundation.Data
+  public func getChildren() -> [SDK.Tlv]
+  public func getChildren(tag: Swift.String) -> SDK.Tlv?
+  public func rebuild() throws -> Foundation.Data
+  public static func parse(tlvData: Foundation.Data) -> [SDK.Tlv]
+  public static func parseOne(tlvData: Foundation.Data) -> SDK.Tlv?
+  public static func searchTag(tlvs: [SDK.Tlv], tag: Swift.String) -> SDK.Tlv?
+  public static func lengthToBytes(_ length: Swift.Int) -> Foundation.Data
+  @objc deinit
+}
+public class CardStatus {
+  public static let CVM_PIN_REQUIRED: Swift.Int
+  public static let CVM_BIO_REQUIRED: Swift.Int
+  public static let CVM_PIN_AND_BIO_REQUIRED: Swift.Int
+  public static let CARD_PHASE_PERSO: Swift.Int
+  public static let CARD_PHASE_PIN_UPDATE: Swift.Int
+  public static let CARD_PHASE_PREUSE: Swift.Int
+  public static let CARD_PHASE_USE: Swift.Int
+  public enum Field {
+    case PTC, PTL, BTC, BTL, EnrolledFingerCount, AppletVersion, ETC, CardState, IsPinDiversified, IsSeedImported
+    public static func == (a: SDK.CardStatus.Field, b: SDK.CardStatus.Field) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  @_hasMissingDesignatedInitializers public class CardStatusData {
+    public var identifier: Foundation.Data
+    public var cardState: Foundation.Data
+    public var pinTryCounter: Swift.Int
+    public var pinTryLimit: Swift.Int
+    public var pukTryCounter: Swift.Int
+    public var pukTryLimit: Swift.Int
+    public var bioTryCounter: Swift.Int
+    public var bioTryLimit: Swift.Int
+    public var userAuthenticationRule: Swift.Int
+    public var fingerEnrolledCount: Swift.Int
+    public var appletVersion: Foundation.Data
+    public var enrollmentTryCounter: Swift.Int
+    public var isPinDiversified: Swift.Bool
+    public var isSeedImported: Swift.Bool
+    public var isCardPaired: Swift.Bool
+    @objc deinit
+  }
+  public init(_ data: SDK.CardStatus.CardStatusData)
+  public func getIdentifier() -> Swift.String
+  public func getCardState() -> Foundation.Data
+  public func getPinTryCounter() -> Swift.Int
+  public func getPinTryLimit() -> Swift.Int
+  public func getPukTryCounter() -> Swift.Int
+  public func getPukTryLimit() -> Swift.Int
+  public func getBioTryCounter() -> Swift.Int
+  public func getBioTryLimit() -> Swift.Int
+  public func getUserAuthenticationRule() -> Swift.Int
+  public func getEnrolledFingerCount() -> Swift.Int
+  public func getAppletVersion() -> Swift.String
+  public func getEnrollmentTryCounter() -> Swift.Int
+  public func isPinDiversified() -> Swift.Bool
+  public func isSeedImported() -> Swift.Bool
+  public func isCardPaired() -> Swift.Bool
+  public static var defaultValues: SDK.CardStatus {
+    get
+  }
+  @objc deinit
+}
+public protocol ICommunication {
+  func sendAPDU(_ apdu: Foundation.Data) throws -> Foundation.Data
+  func sendAPDU(_ apdu: Foundation.Data, _ isSensitiveData: Swift.Bool) throws -> Foundation.Data
+  func isCardDetected() -> Swift.Bool
+  func isConnected() -> Swift.Bool
+  func getATR() -> Foundation.Data
+  func connect(_ timeout: Swift.Int) throws
+  func disconnect()
+}
+@_hasMissingDesignatedInitializers public class BchainPhase1Manager : SDK.BchainManager {
+  public init(communication: any SDK.ICommunication) throws
+  override public func connect() throws
+  override public func getCardStatus() throws -> SDK.CardStatus
+  public func unlockPin(puk: Swift.String) throws
+  public func wipeWallet() throws
+  @objc deinit
+}
+public class NFCCommunication : SDK.ICommunication {
+  public init(_ tag: any CoreNFC.NFCISO7816Tag)
+  public func sendAPDU(_ apdu: Foundation.Data) throws -> Foundation.Data
+  public func sendAPDU(_ apdu: Foundation.Data, _ isSensitiveData: Swift.Bool) throws -> Foundation.Data
+  public func isCardDetected() -> Swift.Bool
+  public func isConnected() -> Swift.Bool
+  public func getATR() -> Foundation.Data
+  public func connect(_ timeout: Swift.Int) throws
+  public func disconnect()
+  @objc deinit
+}
+extension SDK.ErrorMessage : Swift.Equatable {}
+extension SDK.ErrorMessage : Swift.Hashable {}
+extension SDK.ErrorMessage : Swift.RawRepresentable {}
+extension SDK.KeyId : Swift.Equatable {}
+extension SDK.KeyId : Swift.Hashable {}
+extension SDK.CryptoLength : Swift.Equatable {}
+extension SDK.CryptoLength : Swift.Hashable {}
+extension SDK.CryptoLength : Swift.RawRepresentable {}
+extension SDK.SymmetricAlgorithm : Swift.Equatable {}
+extension SDK.SymmetricAlgorithm : Swift.Hashable {}
+extension SDK.ErrorCode : Swift.Equatable {}
+extension SDK.ErrorCode : Swift.Hashable {}
+extension SDK.ErrorCode : Swift.RawRepresentable {}
+extension SDK.CardStatus.Field : Swift.Equatable {}
+extension SDK.CardStatus.Field : Swift.Hashable {}
