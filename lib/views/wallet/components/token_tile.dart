@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:skey/controllers/transaction_controller.dart';
 import 'package:skey/controllers/wallet_controller.dart';
+import 'package:skey/helpers/helpers.dart';
+import 'package:skey/model/token_model.dart';
 import 'package:skey/views/send_token_address/send_token_address_screen.dart';
 import 'package:skey/views/token_detail/token_detail_screen.dart';
 import 'package:skey/views/wallet/wallet_screen.dart';
@@ -13,16 +16,17 @@ import '../../../utils/text_utils.dart';
 import '../../../widgets/space_widget.dart';
 
 class TokenTile extends StatelessWidget {
-  TokenTile({
-    super.key,
-    required this.logo, required this.symbol,
-    required this.balance
-  });
+  TokenTile({super.key, required this.token
+      // required this.logo,
+      // required this.symbol,
+      // required this.balance
+      });
 
+  final Token token;
 
-  final String logo;
-  final String symbol;
-  final String balance;
+  // final String logo;
+  // final String symbol;
+  // final String balance;
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +34,17 @@ class TokenTile extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 20.h),
       child: GestureDetector(
         onTap: () {
-          Get.to(() => SendTokenAddressScreen(symbol: symbol), transition: Transition.cupertino);
+         // print(convertEthToWei(20));
+          Get.to(
+              () => SendTokenAddressScreen(
+                    token: token,
+                  ),
+              transition: Transition.cupertino);
         },
         child: Row(
           children: [
             SvgPicture.asset(
-              logo,
+              token.logo,
               width: 40.w,
               height: 40.h,
             ),
@@ -47,12 +56,11 @@ class TokenTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextUtils.txt(
-                        text: symbol,
+                        text: token.symbol,
                         fontSize: 17,
                         fontWeight: FontWeight.w500),
                     TextUtils.txt(
-                        text:
-                            "$balance $symbol",
+                        text: "${token.balance.toStringAsFixed(4)} ${token.symbol}",
                         fontSize: 16,
                         fontWeight: FontWeight.w500),
                   ],

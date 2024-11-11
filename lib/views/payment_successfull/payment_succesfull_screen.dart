@@ -3,16 +3,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:skey/controllers/pop_up_controller.dart';
+import 'package:skey/controllers/transaction_controller.dart';
+import 'package:skey/controllers/wallet_controller.dart';
 import 'package:skey/utils/asset_utils.dart';
 import 'package:skey/utils/color_utils.dart';
 import 'package:skey/utils/size_utils.dart';
 import 'package:skey/utils/text_utils.dart';
+import 'package:skey/utils/toast_utils.dart';
 import 'package:skey/widgets/appBar_widget.dart';
 import 'package:skey/widgets/btn_widget.dart';
+import 'package:skey/widgets/loader.dart';
 import 'package:skey/widgets/space_widget.dart';
 
 class PaymentSuccesfullScreen extends StatelessWidget {
-  const PaymentSuccesfullScreen({super.key});
+  PaymentSuccesfullScreen({super.key});
+
+  final controller = Get.find<TransactionController>();
+  final walletController = Get.find<WalletController>();
+  RxBool load = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +46,8 @@ class PaymentSuccesfullScreen extends StatelessWidget {
                   ),
                   Space.vertical(15.h),
                   TextUtils.txt(
-                    text: "200.0 SERSH",
+                    text:
+                        "${controller.amount.text} ${controller.selectedToken.value!.symbol}",
                     fontSize: 30,
                   ),
                   Space.vertical(10.h),
@@ -67,13 +76,12 @@ class PaymentSuccesfullScreen extends StatelessWidget {
                       width: 220.w,
                       child: TextUtils.txt(
                           textAlign: TextAlign.end,
-                          text: "0x12343545345384868768468",
+                          text: controller.addressCont.text,
                           fontSize: 12),
                     ),
                   ),
                   ListTile(
                     dense: true,
-
                     title: TextUtils.txt(
                         text: "Transaction ID",
                         fontSize: 12,
@@ -82,13 +90,13 @@ class PaymentSuccesfullScreen extends StatelessWidget {
                       width: 220.w,
                       child: TextUtils.txt(
                           textAlign: TextAlign.end,
-                          text: "12343545345384868768468",
+                          text: controller.transactionId.value,
+                          overflow: TextOverflow.ellipsis,
                           fontSize: 12),
                     ),
                   ),
                   ListTile(
                     dense: true,
-
                     title: TextUtils.txt(
                         text: "Paid with",
                         fontSize: 12,
@@ -105,22 +113,46 @@ class PaymentSuccesfullScreen extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: Btn(
-                    height: 48.h,
-                    width: Get.width.w,
-                    color: ColorUtils.primaryColor,
-                    child: TextUtils.txt(
-                        text: "Send another Transaction",
-                        fontSize: 16,
-                        color: ColorUtils.white),
-                    onTap: () {
-                      Get.close(2);
-                    }),
+                child: Obx(() => load.value
+                    ? loader()
+                    : Btn(
+                        height: 48.h,
+                        width: Get.width.w,
+                        color: ColorUtils.primaryColor,
+                        child: TextUtils.txt(
+                            text: "Send another Transaction",
+                            fontSize: 16,
+                            color: ColorUtils.white),
+                        onTap: () async {
+                          try {
+                            load.value = true;
+                            await walletController.getSershBalance();
+                            if (controller.selectedToken.value!.symbol ==
+                                "SERSH") {
+                              controller.selectedToken.value =
+                                  walletController.tokens[1];
+                            } else {
+                              controller.selectedToken.value =
+                                  walletController.tokens[1];
+                            }
+                            load.value = false;
+                            controller.amount.clear();
+                            Get.close(2);
+                          } catch (e) {
+                            load.value = false;
+                            ToastUtils.showToast(
+                                message: "Error Occurred",
+                                backgroundColor: Colors.red);
+                            print(e);
+                          }
+                        })),
               ),
               AppBarWidget(
                 title: "",
                 onBack: () {
-                  Get.close(2);
+                  //controller.dispose();
+                  Get.find<WalletController>().getAllBalance();
+                  Get.close(3);
                 },
               )
             ],

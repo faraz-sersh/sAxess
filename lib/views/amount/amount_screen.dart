@@ -22,12 +22,12 @@ class AmountScreen extends StatefulWidget {
 }
 
 class _AmountScreenState extends State<AmountScreen> {
-  final TextEditingController amount = TextEditingController();
+
 
   final formKey = GlobalKey<FormState>();
 
   Rx<Color> textColor = (ColorUtils.sBlack).obs;
-  final controller = Get.put(TransactionController());
+  final controller = Get.find<TransactionController>();
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class _AmountScreenState extends State<AmountScreen> {
                                   ),
                                   Space.horizontal(5.w),
                                   TextUtils.txt(
-                                      text: "SERSH",
+                                      text: controller.selectedToken.value!.symbol.toUpperCase(),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
                                       color: ColorUtils.textBlackSecondary),
@@ -83,8 +83,8 @@ class _AmountScreenState extends State<AmountScreen> {
                               Space.vertical(20.h),
                               Obx(() {
                                 return TextFormField(
-                                  controller: amount,
-                                  keyboardType: TextInputType.number,
+                                  controller: controller.amount,
+                                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                                   textAlign: TextAlign.center,
                                   maxLines: null,
                                   style: TextStyle(
@@ -137,7 +137,7 @@ class _AmountScreenState extends State<AmountScreen> {
                       onTap: () {
                         if (formKey.currentState!.validate()) {
                           FocusScope.of(context).unfocus();
-                          confirmPaymentSheet();
+                          confirmPaymentSheet(context, controller);
                         }
                         //Get.to(() => ExistingSeedScreen(), transition: Transition.cupertino);
                       }),

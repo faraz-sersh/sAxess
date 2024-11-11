@@ -12,7 +12,7 @@ String formatNumber(double value) {
 
 BigInt convertEthToWei(double eth) {
   const int weiPerEth = 1000000000000000000;
-  return BigInt.from((eth * weiPerEth).toInt());
+  return BigInt.from(weiPerEth * eth);
 }
 
 double weiToEther(BigInt wei) {

@@ -2,20 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skey/controllers/pop_up_controller.dart';
+import 'package:skey/controllers/transaction_controller.dart';
+import 'package:skey/model/token_model.dart';
 import 'package:skey/utils/size_utils.dart';
 import 'package:skey/utils/text_utils.dart';
+import 'package:skey/views/amount/amount_screen.dart';
 import 'package:skey/widgets/btn_widget.dart';
 import 'package:skey/widgets/space_widget.dart';
 import 'package:web3dart/credentials.dart';
 
 import '../../utils/color_utils.dart';
 
-class SendTokenAddressScreen extends StatelessWidget {
-  SendTokenAddressScreen({super.key, required this.symbol});
+class SendTokenAddressScreen extends StatefulWidget {
+  SendTokenAddressScreen({super.key, required this.token,});
+  final Token token;
 
-  final String symbol;
+  @override
+  State<SendTokenAddressScreen> createState() => _SendTokenAddressScreenState();
+}
+
+class _SendTokenAddressScreenState extends State<SendTokenAddressScreen> {
+
+
   final formKey = GlobalKey<FormState>();
-  TextEditingController addressCont = TextEditingController();
 
   bool isValidEmailAddreess(String v) {
     try {
@@ -28,13 +37,16 @@ class SendTokenAddressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(TransactionController());
+    controller.selectedToken.value = widget.token;
+    controller.balance.value = widget.token.balance.value;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         appBar: AppBar(
-          title: TextUtils.txt(text: "$symbol", fontSize: 20),
+          title: TextUtils.txt(text: "${widget.token.symbol}", fontSize: 20),
           elevation: 0.0,
           centerTitle: false,
           scrolledUnderElevation: 0.0,
@@ -70,7 +82,7 @@ class SendTokenAddressScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
-                          controller: addressCont,
+                          controller: controller.addressCont,
 
                           validator: (v) {
                             if (v!.trim().isEmpty) {
@@ -103,7 +115,7 @@ class SendTokenAddressScreen extends StatelessWidget {
                             text: "Continue", color: ColorUtils.white),
                         onTap: () {
                           if (formKey.currentState!.validate()) {
-
+                            Get.to(() => AmountScreen(), transition: Transition.cupertino);
                           }
                         })
                   ],

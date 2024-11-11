@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:skey/controllers/transaction_controller.dart';
 import 'package:skey/controllers/wallet_controller.dart';
 import 'package:skey/main.dart';
@@ -42,35 +43,46 @@ class WalletScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Stack(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Space.vertical(12.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    LiquidPullToRefresh(
+                      backgroundColor: ColorUtils.white,
+                      color: ColorUtils.primaryColor,
+
+                      onRefresh: () async {
+                        await controller.getAllBalance();
+                      },
+                      child: SingleChildScrollView(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SvgPicture.asset(
-                              AssetUtils.logoGreen,
-                              width: 30.w,
-                              height: 30.h,
+                            Space.vertical(12.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SvgPicture.asset(
+                                  AssetUtils.logoGreen,
+                                  width: 30.w,
+                                  height: 30.h,
+                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      Get.to(() => SettingsScreen(),
+                                          transition: Transition.cupertino);
+                                    },
+                                    icon: Icon(CupertinoIcons.settings))
+                              ],
                             ),
-                            IconButton(
-                                onPressed: () {
-                                  Get.to(() => SettingsScreen(),
-                                      transition: Transition.cupertino);
-                                },
-                                icon: Icon(CupertinoIcons.settings))
+                            Space.vertical(20.h),
+                            CardStackAndBalanceWidget(),
+                            Space.vertical(12.h),
+                            WalletAddress(),
+                            Space.vertical(12.h),
+                            WalletTokenList(
+                              height: 350.h,
+                            )
                           ],
                         ),
-                        Space.vertical(20.h),
-                        CardStackAndBalanceWidget(),
-                        Space.vertical(12.h),
-                        WalletAddress(),
-                        Space.vertical(12.h),
-                        WalletTokenList(
-                          height: 350.h,
-                        )
-                      ],
+                      ),
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,

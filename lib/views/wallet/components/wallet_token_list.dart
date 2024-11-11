@@ -34,18 +34,19 @@ class WalletTokenList extends StatelessWidget {
         primary: false,
         child: Obx(() =>  Column(
           children: [
-            for (int i = 0; i < 1; i++)
-              TokenTile(
-                logo: AssetUtils.bnbIcon,
-                symbol: "TBNB",
-                balance: controller.balance.value.toStringAsFixed(6),
-              ),
-            TokenTile(
-              logo: AssetUtils.logoGreen,
-              symbol: "SERSH",
-              balance: controller.sershBalance.value.toStringAsFixed(6),
-            ),
-            Space.vertical(40.h)
+            for (int i = 0; i < controller.tokens.length; i++)
+                TokenTile(
+                  token: controller.tokens[i],
+                  // logo: AssetUtils.bnbIcon,
+                  // symbol: "TBNB",
+                  // balance: controller.balance.value.toStringAsFixed(6),
+                ),
+            // TokenTile(
+            //   logo: AssetUtils.logoGreen,
+            //   symbol: "SERSH",
+            //   balance: controller.sershBalance.value.toStringAsFixed(6),
+            // ),
+            // Space.vertical(40.h)
           ],
         )),
       ),

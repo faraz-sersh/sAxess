@@ -68,8 +68,8 @@ class _MyAppState extends State<MyApp> {
           home: child,
         );
       },
-      //child: SplashScreen(),
-      child: AmountScreen(),
+      child: SplashScreen(),
+      //child: AmountScreen(),
     );
   }
 }
