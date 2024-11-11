@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,10 +7,10 @@ import '../../../utils/text_utils.dart';
 import '../../../widgets/space_widget.dart';
 
 class AppBarWidget extends StatelessWidget {
-  const AppBarWidget({
-    super.key, required this.title,
-  });
+  const AppBarWidget({super.key, required this.title, this.onBack});
+
   final String title;
+  final VoidCallback? onBack;
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +22,16 @@ class AppBarWidget extends StatelessWidget {
       child: Row(
         children: [
           InkWell(
-            onTap: (){
-              Get.back();
-            },
+            onTap: onBack ?? () {
+                    Get.back();
+                  },
             child: Container(
               width: 50.w,
               height: 50.h,
               alignment: Alignment.center,
               padding: const EdgeInsets.all(12),
               decoration:
-              BoxDecoration(color: ColorUtils.grey, shape: BoxShape.circle),
+                  BoxDecoration(color: ColorUtils.grey, shape: BoxShape.circle),
               child: Icon(Icons.arrow_back_rounded),
             ),
           ),

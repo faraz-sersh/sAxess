@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:skey/main.dart';
 import 'package:skey/services/preferences.dart';
+import 'package:skey/utils/color_utils.dart';
 import 'package:skey/views/boarding/boarding_one.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
@@ -13,6 +15,34 @@ import '../helpers/helpers.dart';
 import '../services/erc-20.dart';
 
 class TransactionController extends GetxController {
+  var textColor = ColorUtils.textBlack.obs;
+  var amountValid = true.obs;
+  RxDouble balance = (1000.000).obs;
+
+  void validateAmountAndUpdateColor(String? value) {
+    Future.delayed(const Duration(milliseconds: 10), () {
+
+      if (value == null || value.trim().isEmpty) {
+        balance.value = 1000;
+        amountValid.value = true;
+        textColor.value = ColorUtils.textBlack;
+      } else {
+        bool isValidNumber =
+            RegExp(r'^[0-9]*\.?[0-9]*$').hasMatch(value.trim());
+        if (!isValidNumber ||
+            (double.tryParse(value.trim()) != null &&
+                double.parse(value.trim()) > balance.value)) {
+          amountValid.value = false;
+          textColor.value = Colors.red;
+        } else {
+          amountValid.value = true;
+          balance.value = 1000 - double.parse(value.trim());
+          textColor.value = ColorUtils.textBlack;
+        }
+      }
+    });
+  }
+
   makeTxCoin() async {
     try {
       Web3Client client = Web3Client(
@@ -81,9 +111,9 @@ class TransactionController extends GetxController {
         final gasPrice = await client.getGasPrice();
         print("gasPrice : ${gasPrice.getInWei.toInt()}");
         final gasLimit = await client.estimateGas(
-            sender: EthereumAddress.fromHex(address.toLowerCase()),
-            value: EtherAmount.inWei(BigInt.zero),
-            );
+          sender: EthereumAddress.fromHex(address.toLowerCase()),
+          value: EtherAmount.inWei(BigInt.zero),
+        );
         print("gasLimit : ${gasLimit}");
         final res = await iosPlatform.invokeMethod("sendTransaction", {
           "nonce": nonce,

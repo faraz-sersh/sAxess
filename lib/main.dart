@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:skey/controllers/pop_up_controller.dart';
 import 'package:skey/utils/color_utils.dart';
 import 'package:skey/utils/size_utils.dart';
+import 'package:skey/views/amount/amount_screen.dart';
 import 'package:skey/views/boarding/boarding_one.dart';
 import 'package:skey/views/boarding/components/boarding_three_bottom.dart';
 import 'package:skey/views/splash/splash_screen.dart';
@@ -67,7 +68,8 @@ class _MyAppState extends State<MyApp> {
           home: child,
         );
       },
-      child: SplashScreen(),
+      //child: SplashScreen(),
+      child: AmountScreen(),
     );
   }
 }
