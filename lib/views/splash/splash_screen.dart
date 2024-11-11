@@ -14,19 +14,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // void listenToEventOne() {
-  //   androidEventPlatform.receiveBroadcastStream().listen((event) {
-  //     print('Received Event One: $event');
-  //   }, onError: (error) {
-  //     print('Error: $error');
-  //   }, onDone: () {
-  //     print('Event One stream ended.');
-  //   });
-  // }
-  // checkInitilazation() async {
-  //   await androidPlatform.invokeMethod("initialized");
-  // }
-
   @override
   void initState() {
     // TODO: implement initState

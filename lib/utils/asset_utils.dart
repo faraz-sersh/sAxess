@@ -1,7 +1,7 @@
 class AssetUtils {
   static String logoWhite = "assets/svgs/logo-white.svg";
   static String logoGreen = "assets/svgs/logo-green.svg";
-  static String logoSplash = "assets/svgs/logo-splash.svg";
+  static String logoSplash = "assets/svgs/splash-logo.svg";
   static String lockIcon = "assets/svgs/icons/lock.svg";
   static String recoverIcon = "assets/svgs/icons/recover.svg";
   static String transferIcon = "assets/svgs/icons/transfer.svg";
@@ -20,6 +20,7 @@ class AssetUtils {
   static String nearIcon = "assets/svgs/icons/NEAR.svg";
   static String solanaIcon = "assets/svgs/icons/SOLANA.svg";
   static String usdtIcon = "assets/svgs/icons/USDT.svg";
+  static String bnbIcon = "assets/svgs/icons/BNB.svg";
 
   // Android Nfc Message
   static String waitingCardSvg = "assets/svgs/nfc_scan.svg";

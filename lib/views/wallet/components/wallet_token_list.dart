@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:skey/controllers/wallet_controller.dart';
 import 'package:skey/views/wallet/components/token_tile.dart';
 
 import '../../../utils/asset_utils.dart';
@@ -10,11 +11,13 @@ import '../../../utils/text_utils.dart';
 import '../../../widgets/space_widget.dart';
 
 class WalletTokenList extends StatelessWidget {
-  const WalletTokenList({
-    super.key, required this.height,
+  WalletTokenList({
+    super.key,
+    required this.height,
   });
 
   final double height;
+  final controller = Get.find<WalletController>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +31,23 @@ class WalletTokenList extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: SingleChildScrollView(
-        child: Column(
+        primary: false,
+        child: Obx(() =>  Column(
           children: [
-            for (int i = 0; i < 10; i++)
-              TokenTile(),
+            for (int i = 0; i < 1; i++)
+              TokenTile(
+                logo: AssetUtils.bnbIcon,
+                symbol: "TBNB",
+                balance: controller.balance.value.toStringAsFixed(6),
+              ),
+            TokenTile(
+              logo: AssetUtils.logoGreen,
+              symbol: "SERSH",
+              balance: controller.sershBalance.value.toStringAsFixed(6),
+            ),
             Space.vertical(40.h)
           ],
-        ),
+        )),
       ),
     );
   }

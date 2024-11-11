@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skey/main.dart';
@@ -78,7 +79,9 @@ class SeedPhraseScreen extends StatelessWidget {
                                   text: "4b9e3f6a7d8c1e2f0a5b6c8d3e7f1b0c"),
                             ),
                             IconButton(
-                                onPressed: () {
+                                onPressed: () async {
+                                  
+                                  await Clipboard.setData(ClipboardData(text: "1234"));
                                   ToastUtils.showToast(
                                       message: "Copied to Clipboard");
                                 },

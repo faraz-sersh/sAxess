@@ -10,13 +10,20 @@ String formatNumber(double value) {
   }
 }
 
+BigInt convertEthToWei(double eth) {
+  const int weiPerEth = 1000000000000000000;
+  return BigInt.from((eth * weiPerEth).toInt());
+}
+
+double weiToEther(BigInt wei) {
+  const int weiPerEth = 1000000000000000000;
+
+  // Convert Wei to Ether (divide by 10^18)
+  return (wei.toDouble() / weiPerEth).toDouble();
+}
 
 String obscureMiddle(String value) {
-  if (value.length == 16) {
-    // Show the first 3 and the last 3 characters, and hide the middle 10
-    return '${value.substring(0, 3)}..........${value.substring(13)}';
-  }
-  return value; // Return original string if it isn't 16 characters
+  return '${value.substring(0, 6)}..........${value.substring(38)}';
 }
 
 // Usage
