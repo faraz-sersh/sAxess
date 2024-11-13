@@ -29,6 +29,11 @@ class TransactionController extends GetxController {
   RxBool load = false.obs;
   final walletController = Get.find<WalletController>();
 
+  setToken(Token token) {
+    selectedToken.value = token;
+    balance.value = token.balance.value;
+  }
+
   void validateAmountAndUpdateColor(String? value) {
     Future.delayed(const Duration(milliseconds: 10), () {
       if (value == null || value.trim().isEmpty) {
@@ -54,7 +59,9 @@ class TransactionController extends GetxController {
     });
   }
 
-  makeTxToken() async {
+  makeTxToken(
+    context,
+  ) async {
     try {
       load.value = true;
       Web3Client client = Web3Client(
@@ -90,12 +97,29 @@ class TransactionController extends GetxController {
         final tx = await client.sendRawTransaction(hexToBytes(res));
         print(tx);
         transactionId.value = tx;
-        await walletController.getAllBalance();
-        load.value = false;
-        Get.close(1);
-
-        Get.to(() => PaymentSuccesfullScreen(),
-            transition: Transition.cupertino);
+        Get.back();
+        Future.delayed(Duration(milliseconds: 100), () {
+          FocusScope.of(context).unfocus();
+        });
+        Future.delayed(Duration(milliseconds: 1500), () async {
+          final status = await waitForTransactionToBeMinedWithTimeout(
+              client, transactionId.value);
+          if (status) {
+            await walletController.getAllBalance();
+            if (selectedToken.value!.symbol == "SERSH") {
+              setToken(walletController.tokens[1]);
+            } else {
+              setToken(walletController.tokens[0]);
+            }
+            load.value = false;
+            Get.to(() => PaymentSuccesfullScreen(),
+                transition: Transition.cupertino);
+          } else {
+            await walletController.getAllBalance();
+            load.value = false;
+            ToastUtils.showToast(message: "Error Occurred!");
+          }
+        });
       } else {
         Get.offAll(() => BoardingOne());
       }
@@ -106,7 +130,9 @@ class TransactionController extends GetxController {
     }
   }
 
-  makeTxCoin() async {
+  makeTxCoin(
+    context,
+  ) async {
     try {
       load.value = true;
       Web3Client client = Web3Client(
@@ -115,8 +141,8 @@ class TransactionController extends GetxController {
       final address = await Preferences.getAddress();
       if (address != null) {
         ContractAbi cont = ContractAbi.fromJson(jsonEncode(erc20), "serenity");
-        final to = EthereumAddress.fromHex(
-            addressCont.text.trim().toLowerCase());
+        final to =
+            EthereumAddress.fromHex(addressCont.text.trim().toLowerCase());
         final contractAddress = EthereumAddress.fromHex(
             "0xF579C0b725F956eb4D70d2B07af4CA8985AFE39f".toLowerCase());
         final params = [to, convertEthToWei(double.parse(amount.text.trim()))];
@@ -152,11 +178,29 @@ class TransactionController extends GetxController {
         final tx = await client.sendRawTransaction(hexToBytes(res));
         print(tx);
         transactionId.value = tx;
-        await walletController.getAllBalance();
-        load.value = false;
-        Get.close(1);
-        Get.to(() => PaymentSuccesfullScreen(),
-            transition: Transition.cupertino);
+        Get.back();
+        Future.delayed(Duration(milliseconds: 100), () {
+          FocusScope.of(context).unfocus();
+        });
+        Future.delayed(Duration(milliseconds: 1500), () async {
+          final status = await waitForTransactionToBeMinedWithTimeout(
+              client, transactionId.value);
+          if (status) {
+            await walletController.getAllBalance();
+            if (selectedToken.value!.symbol == "SERSH") {
+              setToken(walletController.tokens[1]);
+            } else {
+              setToken(walletController.tokens[0]);
+            }
+            load.value = false;
+            Get.to(() => PaymentSuccesfullScreen(),
+                transition: Transition.cupertino);
+          } else {
+            await walletController.getAllBalance();
+            load.value = false;
+            ToastUtils.showToast(message: "Error Occurred!");
+          }
+        });
       } else {
         Get.offAll(() => BoardingOne());
       }
@@ -186,6 +230,45 @@ class TransactionController extends GetxController {
     return EtherAmount.inWei(
       baseFeePerGas.getInWei * BigInt.from(2) + maxPriorityFeePerGas,
     );
+  }
+
+  Future<bool> waitForTransactionToBeMinedWithTimeout(
+      Web3Client client, String transactionHash,
+      {int intervalSeconds = 2, int maxRetries = 5}) async {
+    try {
+      print('Waiting for transaction to be mined...');
+
+      bool isMined = false;
+      int retries = 0;
+
+      while (!isMined && retries < maxRetries) {
+        // Check the transaction status
+        final transaction = await client.getTransactionByHash(transactionHash);
+
+        if (transaction == null) {
+          // If the transaction is not found, it may still be pending.
+          print('Transaction not found yet...');
+        } else if (!transaction.blockNumber.isPending) {
+          // If the transaction has a block number, it is mined.
+          isMined = true;
+          print('Transaction mined in block: ${transaction.blockNumber}');
+        } else {
+          // If the transaction is not mined yet, continue checking.
+          print('Transaction is still pending...');
+        }
+
+        // Wait for the next polling interval
+        if (!isMined) {
+          await Future.delayed(Duration(seconds: intervalSeconds));
+          retries++;
+        }
+      }
+
+      return isMined;
+    } catch (e) {
+      print('Error checking transaction status: $e');
+      return false;
+    }
   }
 
   @override

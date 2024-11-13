@@ -45,24 +45,28 @@ class WalletAddress extends StatelessWidget {
                   color: ColorUtils.addressGreen.withOpacity(0.4),
                   borderRadius: BorderRadius.circular(12.r)),
               padding: EdgeInsets.symmetric(horizontal: 12.w),
-              child: Obx(() => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextUtils.txt(text: obscureMiddle(controller.address.value), fontSize: 13),
-                      InkWell(
-                        onTap: () async {
-                          await Clipboard.setData(ClipboardData(text: controller.address.value));
-                          ToastUtils.showToast(
-                              message: "Address Copied");
-                        },
-                        child: Icon(
-                          Icons.copy_all,
-                          color: ColorUtils.addressGreen,
-                          size: 18.sp,
-                        ),
-                      )
-                    ],
-                  )),
+              child: Obx(() => controller.address.isEmpty
+                  ? SizedBox()
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextUtils.txt(
+                            text: obscureMiddle(controller.address.value),
+                            fontSize: 13),
+                        InkWell(
+                          onTap: () async {
+                            await Clipboard.setData(
+                                ClipboardData(text: controller.address.value));
+                            ToastUtils.showToast(message: "Address Copied");
+                          },
+                          child: Icon(
+                            Icons.copy_all,
+                            color: ColorUtils.addressGreen,
+                            size: 18.sp,
+                          ),
+                        )
+                      ],
+                    )),
             )
           ],
         ),

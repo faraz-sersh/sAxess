@@ -11,6 +11,7 @@ class AssetUtils {
   static String card = "assets/svgs/card.svg";
   static String homeCardStack = "assets/svgs/home-card-stack.svg";
   static String successCheckmark = "assets/svgs/success_checkmark.svg";
+  static String sAxessLogo = "assets/svgs/sAxess.svg";
 
   // Crypto Icons
   static String btcIcon = "assets/svgs/icons/BTC.svg";

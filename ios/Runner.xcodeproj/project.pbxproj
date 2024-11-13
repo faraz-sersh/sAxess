@@ -512,7 +512,7 @@
 				DEVELOPMENT_TEAM = BF8W274ACC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Saxess;
+				INFOPLIST_KEY_CFBundleDisplayName = sAxess;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -698,7 +698,7 @@
 				DEVELOPMENT_TEAM = BF8W274ACC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Saxess;
+				INFOPLIST_KEY_CFBundleDisplayName = sAxess;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -724,7 +724,7 @@
 				DEVELOPMENT_TEAM = BF8W274ACC;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Saxess;
+				INFOPLIST_KEY_CFBundleDisplayName = sAxess;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

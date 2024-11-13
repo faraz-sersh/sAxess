@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skey/controllers/transaction_controller.dart';
@@ -13,6 +14,7 @@ import '../../../widgets/btn_widget.dart';
 
 confirmPaymentSheet(context, TransactionController controller) {
   return Get.bottomSheet(
+
     Container(
       width: Get.width.w,
       height: (SizeUtils.height * 0.5).h,
@@ -34,7 +36,11 @@ confirmPaymentSheet(context, TransactionController controller) {
                   fontWeight: FontWeight.w500),
               GestureDetector(
                   onTap: () {
-                    Get.close(1);
+                    Get.back();
+
+                    Future.delayed(Duration(milliseconds: 100), () {
+                      FocusScope.of(context).unfocus();
+                    });
                   },
                   child: Icon(Icons.close))
             ],
@@ -112,16 +118,16 @@ confirmPaymentSheet(context, TransactionController controller) {
                       fontWeight: FontWeight.w400,
                       color: ColorUtils.textGreyDark),
                 ),
-               Obx(() =>  SizedBox(
-                  width: 180.w,
-                  child: TextUtils.txt(
-                      textAlign: TextAlign.end,
-                      text:
-                          "${(controller.balance.value)} ${controller.selectedToken.value!.symbol.toUpperCase()}",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: ColorUtils.textGreyDark),
-               )),
+                Obx(() => SizedBox(
+                      width: 180.w,
+                      child: TextUtils.txt(
+                          textAlign: TextAlign.end,
+                          text:
+                              "${(controller.balance.value)} ${controller.selectedToken.value!.symbol.toUpperCase()}",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: ColorUtils.textGreyDark),
+                    )),
               ],
             ),
           ),
@@ -138,9 +144,9 @@ confirmPaymentSheet(context, TransactionController controller) {
                       text: "Confirm", fontSize: 16, color: ColorUtils.white),
                   onTap: () async {
                     if (controller.selectedToken.value!.symbol == "SERSH") {
-                      await controller.makeTxCoin();
+                      await controller.makeTxCoin(context,);
                     } else {
-                      await controller.makeTxToken();
+                      await controller.makeTxToken(context);
                     }
                     // Get.to(() => PaymentSuccesfullScreen(),
                     //     transition: Transition.cupertino);

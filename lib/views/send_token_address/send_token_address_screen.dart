@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:skey/controllers/pop_up_controller.dart';
 import 'package:skey/controllers/transaction_controller.dart';
 import 'package:skey/model/token_model.dart';
+import 'package:skey/utils/asset_utils.dart';
 import 'package:skey/utils/size_utils.dart';
 import 'package:skey/utils/text_utils.dart';
 import 'package:skey/views/amount/amount_screen.dart';
@@ -14,7 +16,11 @@ import 'package:web3dart/credentials.dart';
 import '../../utils/color_utils.dart';
 
 class SendTokenAddressScreen extends StatefulWidget {
-  SendTokenAddressScreen({super.key, required this.token,});
+  SendTokenAddressScreen({
+    super.key,
+    required this.token,
+  });
+
   final Token token;
 
   @override
@@ -22,8 +28,6 @@ class SendTokenAddressScreen extends StatefulWidget {
 }
 
 class _SendTokenAddressScreenState extends State<SendTokenAddressScreen> {
-
-
   final formKey = GlobalKey<FormState>();
 
   bool isValidEmailAddreess(String v) {
@@ -38,8 +42,7 @@ class _SendTokenAddressScreenState extends State<SendTokenAddressScreen> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(TransactionController());
-    controller.selectedToken.value = widget.token;
-    controller.balance.value = widget.token.balance.value;
+    controller.setToken(widget.token);
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -65,11 +68,18 @@ class _SendTokenAddressScreenState extends State<SendTokenAddressScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Space.vertical(40.h),
-                    TextUtils.txt(
-                        text:
-                            "Enjoy seamless transaction with Saxess\nWe will handle everything for you",
-                        fontSize: 20),
-                    Space.vertical(40.h),
+                    Center(
+                        child: SvgPicture.asset(
+                      AssetUtils.sAxessLogo,
+                      height: 50.h,
+                      width: 50.w,
+                      color: ColorUtils.primaryColor,
+                    )),
+                    // Space.vertical(20.h),
+                    // TextUtils.txt(
+                    //     text: "Enjoy seamless transactions with sAxess.",
+                    //     fontSize: 20),
+                    Space.vertical(50.h),
                     TextUtils.txt(
                         text: "Enter Receiver Address",
                         fontSize: 16,
@@ -83,20 +93,20 @@ class _SendTokenAddressScreenState extends State<SendTokenAddressScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
                           controller: controller.addressCont,
-
                           validator: (v) {
                             if (v!.trim().isEmpty) {
                               return "Please enter address";
-                            } else if (!isValidEmailAddreess(v)) {
+                            } else if (!isValidEmailAddreess(v.toLowerCase())) {
                               return "Invalid Address";
                             }
                           },
-                          style: TextStyle(fontFamily: "Outfit", fontSize: 16.sp),
+                          style:
+                              TextStyle(fontFamily: "Outfit", fontSize: 16.sp),
                           cursorColor: ColorUtils.textBlack,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                   horizontal: 12.w),
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 12.w),
                               border: InputBorder.none,
                               hintText: "0x1234....................7890",
                               hintStyle: TextStyle(
@@ -115,7 +125,8 @@ class _SendTokenAddressScreenState extends State<SendTokenAddressScreen> {
                             text: "Continue", color: ColorUtils.white),
                         onTap: () {
                           if (formKey.currentState!.validate()) {
-                            Get.to(() => AmountScreen(), transition: Transition.cupertino);
+                            Get.to(() => AmountScreen(),
+                                transition: Transition.cupertino);
                           }
                         })
                   ],

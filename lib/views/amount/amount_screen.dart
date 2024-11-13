@@ -8,6 +8,7 @@ import 'package:skey/utils/color_utils.dart';
 
 import 'package:skey/utils/size_utils.dart';
 import 'package:skey/views/amount/components/confirm_payment_sheet.dart';
+import 'package:skey/widgets/loader.dart';
 import 'package:skey/widgets/space_widget.dart';
 
 import '../../utils/text_utils.dart';
@@ -126,7 +127,7 @@ class _AmountScreenState extends State<AmountScreen> {
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: Btn(
+                  child: Obx(() => controller.load.value ? loader() : Btn(
                       height: 48.h,
                       width: Get.width.w,
                       color: ColorUtils.primaryColor,
@@ -134,13 +135,15 @@ class _AmountScreenState extends State<AmountScreen> {
                           text: "Continue",
                           fontSize: 16,
                           color: ColorUtils.white),
-                      onTap: () {
+                      onTap: () async {
                         if (formKey.currentState!.validate()) {
                           FocusScope.of(context).unfocus();
+                          Future.delayed(Duration(milliseconds: 500), (){
                           confirmPaymentSheet(context, controller);
+                          });
                         }
                         //Get.to(() => ExistingSeedScreen(), transition: Transition.cupertino);
-                      }),
+                      })),
                 ),
                 const AppBarWidget(title: "Enter Amount"),
               ],
