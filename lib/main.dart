@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
           home: child,
         );
       },
-      child: const SettingsScreen(),
+      child: const SplashScreen(),
       //child: AmountScreen(),
     );
   }

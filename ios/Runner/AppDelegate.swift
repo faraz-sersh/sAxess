@@ -302,8 +302,8 @@ import BigInt
                 // Execute in background thread to not block main thread ...
                 var manager =  try BchainManager.build(communication: communication)
                 try manager.connect()
-                try manager.verifyPin(args["oldPin"])
-                try manager.changePin(args["newPin"])
+                try manager.verifyPin(args["oldPin"] as! String)
+                try manager.changePin(newPin :args["newPin"] as! String )
                 NFCHelper.getInstance().stopDetector(successMessage: "Pin Changed")
                 result("success")
             } catch let error {

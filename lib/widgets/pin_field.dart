@@ -27,6 +27,7 @@ class PinField extends StatelessWidget {
         FilteringTextInputFormatter.digitsOnly,
       ],
       onChanged: onChanged,
+
       //keyboardType: TextInputType.number,
       //hapticFeedbackType: HapticFeedbackType.heavyImpact,
       defaultPinTheme: PinTheme(

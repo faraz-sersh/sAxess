@@ -10,11 +10,14 @@ import 'package:skey/utils/toast_utils.dart';
 import 'package:skey/views/boarding/boarding_one.dart';
 import 'package:skey/views/settings/change_pin_screen.dart';
 
+import '../../controllers/settings_controlller.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SettingsController());
     return Scaffold(
       appBar: AppBar(
         title: TextUtils.txt(text: "Settings", fontSize: 20),
@@ -29,11 +32,12 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              title: TextUtils.txt(text: "Get Card Serial", fontSize: 16),
+              title: TextUtils.txt(text: "Get Card Status", fontSize: 16),
               trailing: const Icon(Icons.keyboard_arrow_right_rounded),
             ),
             ListTile(
               onTap: () {
+                controller.clear();
                 Get.to(() => ChangePinScreen(),
                     transition: Transition.cupertino);
               },
@@ -46,20 +50,7 @@ class SettingsScreen extends StatelessWidget {
               clipBehavior: Clip.antiAlias,
               child: ListTile(
                 onTap: () async {
-                  if (Platform.isIOS) {
-                    final result = await iosPlatform.invokeMethod("unpairCard");
-                    if (result == "Not Paired") {
-                      ToastUtils.showToast(
-                          message: "Card Not Paired",
-                          backgroundColor: Colors.red);
-                    } else if (result == "unpaired") {
-                      Get.offAll(() => const BoardingOne());
-                    } else {
-                      ToastUtils.showToast(
-                          message: "Error Occurred!",
-                          backgroundColor: Colors.red);
-                    }
-                  }
+                  await controller.unpairCard();
                 },
                 title: TextUtils.txt(
                     text: "Unpair Card", fontSize: 16, color: ColorUtils.white),
