@@ -6,7 +6,6 @@ import 'package:http/http.dart';
 import 'package:skey/helpers/helpers.dart';
 import 'package:skey/model/token_model.dart';
 import 'package:skey/services/preferences.dart';
-import 'package:skey/utils/color_utils.dart';
 import 'package:skey/utils/toast_utils.dart';
 import 'package:web3dart/web3dart.dart';
 

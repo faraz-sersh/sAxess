@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:skey/utils/asset_utils.dart';
-import 'package:skey/utils/size_utils.dart';
 import 'package:skey/widgets/space_widget.dart';
 
 class FirstAnimatedRow extends StatefulWidget {
@@ -22,8 +21,8 @@ class _FirstAnimatedRowState extends State<FirstAnimatedRow> {
     // TODO: implement initState
     super.initState();
     rowAnimation = Tween<Offset>(
-      begin: Offset(-1.0, 0.0),
-      end: Offset(1.0, 0.0),
+      begin: const Offset(-1.0, 0.0),
+      end: const Offset(1.0, 0.0),
     ).animate(CurvedAnimation(
       parent: widget.animationController,
       curve: Curves.linear,

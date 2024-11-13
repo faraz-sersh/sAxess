@@ -1,13 +1,10 @@
-import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
-import 'package:skey/controllers/transaction_controller.dart';
 import 'package:skey/controllers/wallet_controller.dart';
-import 'package:skey/main.dart';
 import 'package:skey/utils/asset_utils.dart';
 import 'package:skey/utils/color_utils.dart';
 import 'package:skey/utils/size_utils.dart';
@@ -51,7 +48,7 @@ class WalletScreen extends StatelessWidget {
                         await controller.getAllBalance();
                       },
                       child: SingleChildScrollView(
-                        physics: AlwaysScrollableScrollPhysics(),
+                        physics: const AlwaysScrollableScrollPhysics(),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -66,10 +63,10 @@ class WalletScreen extends StatelessWidget {
                                 ),
                                 IconButton(
                                     onPressed: () {
-                                      Get.to(() => SettingsScreen(),
+                                      Get.to(() => const SettingsScreen(),
                                           transition: Transition.cupertino);
                                     },
-                                    icon: Icon(CupertinoIcons.settings))
+                                    icon: const Icon(CupertinoIcons.settings))
                               ],
                             ),
                             Space.vertical(20.h),
@@ -96,7 +93,7 @@ class WalletScreen extends StatelessWidget {
                               color: ColorUtils.white),
                           onTap: () async {
                             //await controller.getSershBalance();
-                            Get.to(() => ManageTokenScreen(),
+                            Get.to(() => const ManageTokenScreen(),
                                 transition: Transition.cupertino);
                           }),
                     )

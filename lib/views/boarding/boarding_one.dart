@@ -15,7 +15,7 @@ import 'components/first_animated_row.dart';
 import 'components/progress_bar.dart';
 
 class BoardingOne extends StatefulWidget {
-  BoardingOne({super.key});
+  const BoardingOne({super.key});
 
   @override
   State<BoardingOne> createState() => _BoardingOneState();

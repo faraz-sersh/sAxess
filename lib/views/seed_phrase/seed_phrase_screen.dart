@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:skey/main.dart';
 import 'package:skey/utils/size_utils.dart';
 import 'package:skey/utils/toast_utils.dart';
 import 'package:skey/views/auth/email_address_screen.dart';
@@ -66,7 +65,7 @@ class SeedPhraseScreen extends StatelessWidget {
                       Space.vertical(10.h),
                       Container(
                         width: Get.width.w,
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                             color: ColorUtils.grey,
                             borderRadius: BorderRadius.circular(12.r)),
@@ -81,11 +80,11 @@ class SeedPhraseScreen extends StatelessWidget {
                             IconButton(
                                 onPressed: () async {
                                   
-                                  await Clipboard.setData(ClipboardData(text: "1234"));
+                                  await Clipboard.setData(const ClipboardData(text: "1234"));
                                   ToastUtils.showToast(
                                       message: "Copied to Clipboard");
                                 },
-                                icon: Icon(Icons.copy)),
+                                icon: const Icon(Icons.copy)),
                           ],
                         ),
                       )
@@ -112,7 +111,7 @@ class SeedPhraseScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                AppBarWidget(title: "Create Wallet")
+                const AppBarWidget(title: "Create Wallet")
               ],
             ),
           ),

@@ -13,7 +13,7 @@ import 'package:skey/widgets/space_widget.dart';
 import 'components/boarding_two_bottom.dart';
 
 class BoardingTwo extends StatefulWidget {
-   BoardingTwo({super.key});
+   const BoardingTwo({super.key});
 
   @override
   State<BoardingTwo> createState() => _BoardingTwoState();
@@ -27,7 +27,7 @@ class _BoardingTwoState extends State<BoardingTwo> {
     // TODO: implement initState
     super.initState();
     controller.opacityTwo.value = 0.0;
-    Future.delayed(Duration(milliseconds: 200), () {
+    Future.delayed(const Duration(milliseconds: 200), () {
       controller.opacityTwo.value = 1.0;
     });
   }
@@ -65,7 +65,7 @@ class _BoardingTwoState extends State<BoardingTwo> {
   Widget backgorundImage() {
     return Obx(() =>  AnimatedOpacity(
       opacity: controller.opacityTwo.value,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
       curve: Curves.easeIn,
       child: SizedBox(
         width: SizeUtils.width.w,

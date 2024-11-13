@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:skey/controllers/pop_up_controller.dart';
 import 'package:skey/utils/asset_utils.dart';
 import 'package:skey/utils/color_utils.dart';
 import 'package:skey/utils/size_utils.dart';
@@ -49,14 +46,14 @@ class TokenDetailScreen extends StatelessWidget {
                     ),
                   ),
                   Space.vertical(12.h),
-                  PayAndBtnWidget(),
+                  const PayAndBtnWidget(),
                   Space.vertical(20.h),
-                  TokenMarketPriceWidget(),
+                  const TokenMarketPriceWidget(),
                   Space.vertical(20.h),
-                  TransactionList()
+                  const TransactionList()
                 ],
               ),
-              AppBarWidget(title: "Bitcoin")
+              const AppBarWidget(title: "Bitcoin")
             ],
           ),
         ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:skey/controllers/pop_up_controller.dart';
 import 'package:skey/controllers/transaction_controller.dart';
 import 'package:skey/model/token_model.dart';
 import 'package:skey/utils/asset_utils.dart';
@@ -16,7 +15,7 @@ import 'package:web3dart/credentials.dart';
 import '../../utils/color_utils.dart';
 
 class SendTokenAddressScreen extends StatefulWidget {
-  SendTokenAddressScreen({
+  const SendTokenAddressScreen({
     super.key,
     required this.token,
   });
@@ -49,7 +48,7 @@ class _SendTokenAddressScreenState extends State<SendTokenAddressScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: TextUtils.txt(text: "${widget.token.symbol}", fontSize: 20),
+          title: TextUtils.txt(text: widget.token.symbol, fontSize: 20),
           elevation: 0.0,
           centerTitle: false,
           scrolledUnderElevation: 0.0,
@@ -99,6 +98,7 @@ class _SendTokenAddressScreenState extends State<SendTokenAddressScreen> {
                             } else if (!isValidEmailAddreess(v.toLowerCase())) {
                               return "Invalid Address";
                             }
+                            return null;
                           },
                           style:
                               TextStyle(fontFamily: "Outfit", fontSize: 16.sp),
@@ -125,7 +125,7 @@ class _SendTokenAddressScreenState extends State<SendTokenAddressScreen> {
                             text: "Continue", color: ColorUtils.white),
                         onTap: () {
                           if (formKey.currentState!.validate()) {
-                            Get.to(() => AmountScreen(),
+                            Get.to(() => const AmountScreen(),
                                 transition: Transition.cupertino);
                           }
                         })

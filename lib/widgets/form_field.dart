@@ -22,7 +22,7 @@ class MyFormField extends StatelessWidget {
   final borderStyle = OutlineInputBorder(
       gapPadding: 12,
       borderRadius: BorderRadius.circular(8.r),
-      borderSide: BorderSide(color: ColorUtils.textBlack));
+      borderSide: const BorderSide(color: ColorUtils.textBlack));
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +42,7 @@ class MyFormField extends StatelessWidget {
             return 'Please enter a valid email address';
           }
         }
+        return null;
       },
       style: TextStyle(fontFamily: "Outfit", fontSize: 16.sp),
       cursorColor: ColorUtils.textBlack,

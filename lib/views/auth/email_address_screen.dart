@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:skey/main.dart';
 import 'package:skey/utils/size_utils.dart';
 import 'package:skey/views/auth/personal_info_screen.dart';
 import 'package:skey/widgets/appBar_widget.dart';
@@ -92,7 +91,7 @@ class EmailAddressScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                AppBarWidget(title: "Register Yourself")
+                const AppBarWidget(title: "Register Yourself")
               ],
             ),
           ),

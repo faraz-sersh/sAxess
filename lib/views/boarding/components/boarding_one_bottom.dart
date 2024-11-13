@@ -37,8 +37,8 @@ class BoardingOneBottom extends StatelessWidget {
               width: 150.w,
               color: ColorUtils.primaryColor,
               onTap: () {
-                Get.to(() => BoardingTwo(),
-                    transition: Transition.cupertino, duration: Duration(milliseconds: 700));
+                Get.to(() => const BoardingTwo(),
+                    transition: Transition.cupertino, duration: const Duration(milliseconds: 700));
               },
               child: TextUtils.txt(
                   text: "Next",

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +7,6 @@ import 'package:skey/helpers/helpers.dart';
 import 'package:skey/utils/color_utils.dart';
 import 'package:skey/utils/text_utils.dart';
 import 'package:skey/utils/toast_utils.dart';
-import 'package:skey/widgets/btn_widget.dart';
 import 'package:skey/widgets/space_widget.dart';
 
 class WalletAddress extends StatelessWidget {
@@ -46,7 +44,7 @@ class WalletAddress extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12.r)),
               padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: Obx(() => controller.address.isEmpty
-                  ? SizedBox()
+                  ? const SizedBox()
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

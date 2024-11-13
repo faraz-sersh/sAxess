@@ -31,8 +31,8 @@ class AppBarWidget extends StatelessWidget {
               alignment: Alignment.center,
               padding: const EdgeInsets.all(12),
               decoration:
-                  BoxDecoration(color: ColorUtils.grey, shape: BoxShape.circle),
-              child: Icon(Icons.arrow_back_rounded),
+                  const BoxDecoration(color: ColorUtils.grey, shape: BoxShape.circle),
+              child: const Icon(Icons.arrow_back_rounded),
             ),
           ),
           Space.horizontal(16.w),

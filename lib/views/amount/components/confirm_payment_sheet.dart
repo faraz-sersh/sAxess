@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skey/controllers/transaction_controller.dart';
 import 'package:skey/utils/size_utils.dart';
-import 'package:skey/views/payment_successfull/payment_succesfull_screen.dart';
 import 'package:skey/widgets/loader.dart';
 import 'package:skey/widgets/space_widget.dart';
 
@@ -18,7 +16,7 @@ confirmPaymentSheet(context, TransactionController controller) {
     Container(
       width: Get.width.w,
       height: (SizeUtils.height * 0.5).h,
-      padding: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: ColorUtils.white,
           borderRadius: BorderRadius.only(
@@ -38,11 +36,11 @@ confirmPaymentSheet(context, TransactionController controller) {
                   onTap: () {
                     Get.back();
 
-                    Future.delayed(Duration(milliseconds: 100), () {
+                    Future.delayed(const Duration(milliseconds: 100), () {
                       FocusScope.of(context).unfocus();
                     });
                   },
-                  child: Icon(Icons.close))
+                  child: const Icon(Icons.close))
             ],
           ),
           Space.vertical(20.h),
@@ -51,12 +49,12 @@ confirmPaymentSheet(context, TransactionController controller) {
           Space.vertical(8.h),
           Container(
             width: Get.width.w,
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.r),
                 border: Border.all(width: 1.w, color: ColorUtils.grey)),
             child: TextUtils.txt(
-                text: "${controller.addressCont.text}",
+                text: controller.addressCont.text,
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: ColorUtils.textGreyDark),
@@ -67,7 +65,7 @@ confirmPaymentSheet(context, TransactionController controller) {
           Space.vertical(8.h),
           Container(
             width: Get.width.w,
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.r),
                 border: Border.all(width: 1.w, color: ColorUtils.grey)),
@@ -102,7 +100,7 @@ confirmPaymentSheet(context, TransactionController controller) {
           Space.vertical(8.h),
           Container(
             width: Get.width.w,
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.r),
                 border: Border.all(width: 1.w, color: ColorUtils.grey)),
@@ -131,7 +129,7 @@ confirmPaymentSheet(context, TransactionController controller) {
               ],
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Obx(() => controller.load.value
               ? Center(
                   child: loader(),

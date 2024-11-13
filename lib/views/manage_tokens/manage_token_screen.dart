@@ -42,7 +42,7 @@ class ManageTokenScreen extends StatelessWidget {
                       Get.back();
                     }),
               ),
-              AppBarWidget(title: "Manage Token")
+              const AppBarWidget(title: "Manage Token")
             ],
           ),
         ),

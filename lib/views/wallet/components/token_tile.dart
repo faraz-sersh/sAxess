@@ -2,21 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:skey/controllers/transaction_controller.dart';
-import 'package:skey/controllers/wallet_controller.dart';
-import 'package:skey/helpers/helpers.dart';
 import 'package:skey/model/token_model.dart';
 import 'package:skey/views/send_token_address/send_token_address_screen.dart';
-import 'package:skey/views/token_detail/token_detail_screen.dart';
-import 'package:skey/views/wallet/wallet_screen.dart';
 
-import '../../../utils/asset_utils.dart';
-import '../../../utils/color_utils.dart';
 import '../../../utils/text_utils.dart';
 import '../../../widgets/space_widget.dart';
 
 class TokenTile extends StatelessWidget {
-  TokenTile({super.key, required this.token
+  const TokenTile({super.key, required this.token
       // required this.logo,
       // required this.symbol,
       // required this.balance

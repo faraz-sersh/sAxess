@@ -6,14 +6,17 @@ import 'package:pinput/pinput.dart';
 import 'package:skey/utils/color_utils.dart';
 
 class PinField extends StatelessWidget {
-  const PinField({
+  PinField({
     super.key,
     required this.controller,
-    this.match
+    this.match,
+    this.onChanged
   });
 
-  final TextEditingController controller;
-  final String? match;
+  TextEditingController controller;
+  String? match;
+  ValueChanged<String>? onChanged;
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,7 @@ class PinField extends StatelessWidget {
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],
+      onChanged: onChanged,
       //keyboardType: TextInputType.number,
       //hapticFeedbackType: HapticFeedbackType.heavyImpact,
       defaultPinTheme: PinTheme(
@@ -45,12 +49,13 @@ class PinField extends StatelessWidget {
           if (v!.isEmpty || v.length < 6) {
             return "Please enter 6 digit pin";
           }else if(v != match){
-            // print(v);
-            // print(match);
+             print(v);
+             print(match);
             return "Pin Mismatched";
           }
 
         }
+        return null;
       },
     );
   }

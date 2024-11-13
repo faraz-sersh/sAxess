@@ -81,7 +81,7 @@ class TransactionController extends GetxController {
           to: EthereumAddress.fromHex(addressCont.text.trim().toLowerCase()),
           //value: EtherAmount.inWei(BigInt.from(100000000000000000))
         );
-        print("gasLimit : ${gasLimit}");
+        print("gasLimit : $gasLimit");
         //load.value = false;
 
         final res = await iosPlatform.invokeMethod("sendTransaction", {
@@ -98,10 +98,10 @@ class TransactionController extends GetxController {
         print(tx);
         transactionId.value = tx;
         Get.back();
-        Future.delayed(Duration(milliseconds: 100), () {
+        Future.delayed(const Duration(milliseconds: 100), () {
           FocusScope.of(context).unfocus();
         });
-        Future.delayed(Duration(milliseconds: 1500), () async {
+        Future.delayed(const Duration(milliseconds: 1500), () async {
           final status = await waitForTransactionToBeMinedWithTimeout(
               client, transactionId.value);
           if (status) {
@@ -121,7 +121,7 @@ class TransactionController extends GetxController {
           }
         });
       } else {
-        Get.offAll(() => BoardingOne());
+        Get.offAll(() => const BoardingOne());
       }
     } catch (e) {
       load.value = false;
@@ -147,11 +147,11 @@ class TransactionController extends GetxController {
             "0xF579C0b725F956eb4D70d2B07af4CA8985AFE39f".toLowerCase());
         final params = [to, convertEthToWei(double.parse(amount.text.trim()))];
         var data;
-        cont.functions.forEach((v) {
+        for (var v in cont.functions) {
           if (v.name == "transfer") {
             data = v.encodeCall(params);
           }
-        });
+        }
 
         final nonce = await client.getTransactionCount(
             EthereumAddress.fromHex(address.toLowerCase()));
@@ -162,7 +162,7 @@ class TransactionController extends GetxController {
           sender: EthereumAddress.fromHex(address.toLowerCase()),
           value: EtherAmount.inWei(BigInt.zero),
         );
-        print("gasLimit : ${gasLimit}");
+        print("gasLimit : $gasLimit");
 
         final res = await iosPlatform.invokeMethod("sendTransaction", {
           "nonce": nonce,
@@ -179,10 +179,10 @@ class TransactionController extends GetxController {
         print(tx);
         transactionId.value = tx;
         Get.back();
-        Future.delayed(Duration(milliseconds: 100), () {
+        Future.delayed(const Duration(milliseconds: 100), () {
           FocusScope.of(context).unfocus();
         });
-        Future.delayed(Duration(milliseconds: 1500), () async {
+        Future.delayed(const Duration(milliseconds: 1500), () async {
           final status = await waitForTransactionToBeMinedWithTimeout(
               client, transactionId.value);
           if (status) {
@@ -202,7 +202,7 @@ class TransactionController extends GetxController {
           }
         });
       } else {
-        Get.offAll(() => BoardingOne());
+        Get.offAll(() => const BoardingOne());
       }
     } catch (e) {
       load.value = false;

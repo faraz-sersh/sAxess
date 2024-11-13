@@ -65,7 +65,7 @@ class SeedOptionScreen extends StatelessWidget {
                             color: ColorUtils.white,
                             fontSize: 16),
                         onTap: () {
-                          Get.to(() => SeedPhraseScreen(), transition: Transition.cupertino);
+                          Get.to(() => const SeedPhraseScreen(), transition: Transition.cupertino);
                         }),
                     Space.vertical(12.h),
                     Btn(
@@ -78,7 +78,7 @@ class SeedOptionScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              AppBarWidget(title: "Create Wallet"),
+              const AppBarWidget(title: "Create Wallet"),
             ],
           ),
         ),

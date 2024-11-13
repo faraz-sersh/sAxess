@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:skey/controllers/pop_up_controller.dart';
 import 'package:skey/utils/asset_utils.dart';
 import 'package:skey/utils/color_utils.dart';
 import 'package:skey/utils/text_utils.dart';
@@ -30,7 +29,7 @@ class CardSetupSucessScreen extends StatelessWidget {
             onTap: () {
               Get.offAll(() => WalletScreen(),
                   transition: Transition.circularReveal,
-                  duration: Duration(seconds: 1));
+                  duration: const Duration(seconds: 1));
             }),
       ),
       body: Center(

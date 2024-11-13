@@ -8,6 +8,7 @@ import 'package:skey/utils/color_utils.dart';
 import 'package:skey/utils/text_utils.dart';
 import 'package:skey/utils/toast_utils.dart';
 import 'package:skey/views/boarding/boarding_one.dart';
+import 'package:skey/views/settings/change_pin_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -29,11 +30,15 @@ class SettingsScreen extends StatelessWidget {
           children: [
             ListTile(
               title: TextUtils.txt(text: "Get Card Serial", fontSize: 16),
-              trailing: Icon(Icons.keyboard_arrow_right_rounded),
+              trailing: const Icon(Icons.keyboard_arrow_right_rounded),
             ),
             ListTile(
+              onTap: () {
+                Get.to(() => ChangePinScreen(),
+                    transition: Transition.cupertino);
+              },
               title: TextUtils.txt(text: "Change Card Pin", fontSize: 16),
-              trailing: Icon(Icons.keyboard_arrow_right_rounded),
+              trailing: const Icon(Icons.keyboard_arrow_right_rounded),
             ),
             Container(
               decoration: BoxDecoration(
@@ -48,7 +53,7 @@ class SettingsScreen extends StatelessWidget {
                           message: "Card Not Paired",
                           backgroundColor: Colors.red);
                     } else if (result == "unpaired") {
-                      Get.offAll(() => BoardingOne());
+                      Get.offAll(() => const BoardingOne());
                     } else {
                       ToastUtils.showToast(
                           message: "Error Occurred!",
@@ -56,8 +61,12 @@ class SettingsScreen extends StatelessWidget {
                     }
                   }
                 },
-                title: TextUtils.txt(text: "Unpair Card", fontSize: 16),
-                trailing: Icon(Icons.keyboard_arrow_right_rounded),
+                title: TextUtils.txt(
+                    text: "Unpair Card", fontSize: 16, color: ColorUtils.white),
+                trailing: Icon(
+                  Icons.keyboard_arrow_right_rounded,
+                  color: ColorUtils.white,
+                ),
               ),
             ),
           ],

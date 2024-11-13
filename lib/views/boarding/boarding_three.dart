@@ -12,7 +12,6 @@ import 'package:skey/views/boarding/components/boarding_three_bottom.dart';
 import 'package:skey/views/boarding/components/progress_bar.dart';
 import 'package:skey/widgets/space_widget.dart';
 
-import 'components/boarding_two_bottom.dart';
 
 class BoardingThree extends StatefulWidget {
   const BoardingThree({super.key});
@@ -29,7 +28,7 @@ class _BoardingThreeState extends State<BoardingThree> {
     // TODO: implement initState
     super.initState();
     controller.opacityThree.value = 0.0;
-    Future.delayed(Duration(milliseconds: 200), () {
+    Future.delayed(const Duration(milliseconds: 200), () {
       controller.opacityThree.value = 1.0;
     });
   }
@@ -78,7 +77,7 @@ class _BoardingThreeState extends State<BoardingThree> {
   Widget backgorundImage() {
     return Obx(() => AnimatedOpacity(
           opacity: controller.opacityThree.value,
-          duration: Duration(seconds: 1),
+          duration: const Duration(seconds: 1),
           curve: Curves.easeIn,
           child: SizedBox(
             width: SizeUtils.width.w,

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 Widget loader(){
   if(Platform.isIOS){
-    return CupertinoActivityIndicator();
+    return const CupertinoActivityIndicator();
   }else{
-    return CircularProgressIndicator();
+    return const CircularProgressIndicator();
   }
 }

@@ -16,7 +16,7 @@ import '../../widgets/appBar_widget.dart';
 import '../../widgets/btn_widget.dart';
 
 class AmountScreen extends StatefulWidget {
-  AmountScreen({super.key});
+  const AmountScreen({super.key});
 
   @override
   State<AmountScreen> createState() => _AmountScreenState();
@@ -55,7 +55,7 @@ class _AmountScreenState extends State<AmountScreen> {
                         Container(
                           width: 360.w,
                           //height: 185.h,
-                          padding: EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(12),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               color: ColorUtils.white,
@@ -85,7 +85,7 @@ class _AmountScreenState extends State<AmountScreen> {
                               Obx(() {
                                 return TextFormField(
                                   controller: controller.amount,
-                                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                   textAlign: TextAlign.center,
                                   maxLines: null,
                                   style: TextStyle(
@@ -138,7 +138,7 @@ class _AmountScreenState extends State<AmountScreen> {
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
                           FocusScope.of(context).unfocus();
-                          Future.delayed(Duration(milliseconds: 500), (){
+                          Future.delayed(const Duration(milliseconds: 500), (){
                           confirmPaymentSheet(context, controller);
                           });
                         }

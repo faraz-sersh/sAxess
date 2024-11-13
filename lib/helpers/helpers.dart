@@ -1,10 +1,10 @@
 String formatNumber(double value) {
   if (value >= 1000000000) {
-    return (value / 1000000000).toStringAsFixed(3) + 'B';
+    return '${(value / 1000000000).toStringAsFixed(3)}B';
   } else if (value >= 1000000) {
-    return (value / 1000000).toStringAsFixed(3) + 'M';
+    return '${(value / 1000000).toStringAsFixed(3)}M';
   } else if (value >= 1000) {
-    return (value / 1000).toStringAsFixed(3) + 'K';
+    return '${(value / 1000).toStringAsFixed(3)}K';
   } else {
     return value.toStringAsFixed(3);
   }

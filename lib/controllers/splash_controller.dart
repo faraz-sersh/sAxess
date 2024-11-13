@@ -8,16 +8,16 @@ class SplashController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    Future.delayed(Duration(seconds: 2), () async {
+    Future.delayed(const Duration(seconds: 2), () async {
       final res = await Preferences.getAddress();
       if (res != null) {
         Get.offAll(() => WalletScreen(),
             transition: Transition.circularReveal,
-            duration: Duration(seconds: 1));
+            duration: const Duration(seconds: 1));
       } else {
-        Get.offAll(() => BoardingOne(),
+        Get.offAll(() => const BoardingOne(),
             transition: Transition.circularReveal,
-            duration: Duration(seconds: 1));
+            duration: const Duration(seconds: 1));
       }
     });
   }

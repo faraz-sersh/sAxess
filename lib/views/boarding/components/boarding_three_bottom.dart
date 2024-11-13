@@ -1,20 +1,14 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skey/controllers/pop_up_controller.dart';
 import 'package:skey/main.dart';
 import 'package:skey/utils/size_utils.dart';
-import 'package:skey/views/boarding/boarding_two.dart';
 import 'package:skey/views/card_pin/existing_card_pin.dart';
 import 'package:skey/views/card_pin/new_card_pin.dart';
-import 'package:skey/views/create_wallet_options/create_wallet_option.dart';
-import 'package:skey/views/existing_seed/existing_seed_screen.dart';
-import 'package:skey/views/wallet/wallet_screen.dart';
 
 import '../../../utils/color_utils.dart';
 import '../../../utils/text_utils.dart';
@@ -35,8 +29,8 @@ class BoardingThreeBottom extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.transparent,
           gradient: LinearGradient(
-            begin: Alignment(0.00, -1.00),
-            end: Alignment(0, 1),
+            begin: const Alignment(0.00, -1.00),
+            end: const Alignment(0, 1),
             colors: [Colors.white.withOpacity(0), Colors.white],
           ),
         ),
@@ -58,7 +52,7 @@ class BoardingThreeBottom extends StatelessWidget {
 
                 // final res  = await iosPlatform.invokeMethod('sendTransaction', {"to" : "1234"});
                 // print(res);
-                Get.to(() => ExistingCardPinScreen(),
+                Get.to(() => const ExistingCardPinScreen(),
                     transition: Transition.circularReveal);
                 //showPopup(context);
                 //NativeDataHandler.initialize();
@@ -116,7 +110,7 @@ class BoardingThreeBottom extends StatelessWidget {
       popupController.content.value = "Error";
       print('Error: $error');
     }, onDone: () async {
-      Future.delayed(Duration(seconds: 1), () async {
+      Future.delayed(const Duration(seconds: 1), () async {
         print('Stream has ended.');
         await popupController.eventSubscription.value?.cancel();
         popupController.closePopup();

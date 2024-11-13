@@ -15,7 +15,7 @@ class MyPhoneField extends StatelessWidget {
   final borderStyle = OutlineInputBorder(
       gapPadding: 12,
       borderRadius: BorderRadius.circular(8.r),
-      borderSide: BorderSide(color: ColorUtils.textBlack));
+      borderSide: const BorderSide(color: ColorUtils.textBlack));
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +43,10 @@ class MyPhoneField extends StatelessWidget {
       validator: (v) {
         if (v!.number.isEmpty) {
           return "Please fill in this field";
-        } else if (v!.completeNumber.isEmpty) {
+        } else if (v.completeNumber.isEmpty) {
           return "Please enter complete number";
         }
+        return null;
       },
     );
   }

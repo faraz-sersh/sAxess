@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:skey/main.dart';
 import 'package:skey/utils/size_utils.dart';
-import 'package:skey/utils/toast_utils.dart';
 import 'package:skey/views/auth/email_address_screen.dart';
 import 'package:skey/widgets/appBar_widget.dart';
 import 'package:skey/widgets/space_widget.dart';
@@ -66,13 +64,13 @@ class ExistingSeedScreen extends StatelessWidget {
                           Container(
                             width: Get.width.w,
                             //height: 100.w,
-                            padding: EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                                 color: ColorUtils.grey,
                                 borderRadius: BorderRadius.circular(12.r)),
                             child: TextFormField(
                               maxLines: null,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: InputBorder.none
                               ),
                             ),
@@ -100,7 +98,7 @@ class ExistingSeedScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    AppBarWidget(title: "Create Wallet")
+                    const AppBarWidget(title: "Create Wallet")
                   ],
                 ),
               ),

@@ -1,22 +1,18 @@
-import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:skey/controllers/pop_up_controller.dart';
-import 'package:skey/main.dart';
 import 'package:skey/utils/asset_utils.dart';
 import 'package:skey/utils/color_utils.dart';
 import 'package:skey/utils/text_utils.dart';
-import 'package:skey/widgets/loader.dart';
 import 'package:skey/widgets/space_widget.dart';
 
 class PopupWidget extends StatelessWidget {
   //final StreamSubscription? stream;
 
-  PopupWidget();
+  PopupWidget({super.key});
 
   final controller = Get.find<PopUpController>();
 
@@ -28,7 +24,7 @@ class PopupWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           width: Get.width.w,
           height: (Get.height * 0.6).h,
           child: Obx(() => Column(

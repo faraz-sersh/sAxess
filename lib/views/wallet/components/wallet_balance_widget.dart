@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:skey/controllers/wallet_controller.dart';
 import 'package:skey/utils/asset_utils.dart';
 import 'package:skey/utils/color_utils.dart';
-import 'package:skey/utils/size_utils.dart';
 import 'package:skey/utils/text_utils.dart';
 import 'package:skey/widgets/space_widget.dart';
 

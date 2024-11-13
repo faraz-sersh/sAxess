@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skey/utils/color_utils.dart';
@@ -67,9 +66,9 @@ class NewCardPinScreen extends StatelessWidget {
                             color: ColorUtils.white),
                         onTap: () {
                           FocusScope.of(context).unfocus();
-                          Get.to(() => CreateWalletOptionScreen(),
+                          Get.to(() => const CreateWalletOptionScreen(),
                               transition: Transition.circularReveal,
-                              duration: Duration(seconds: 1));
+                              duration: const Duration(seconds: 1));
                           //if (formKey.currentState!.validate()) {}
                         }),
                   ),

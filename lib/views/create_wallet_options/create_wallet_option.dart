@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:skey/main.dart';
 import 'package:skey/utils/asset_utils.dart';
 import 'package:skey/utils/color_utils.dart';
 import 'package:skey/utils/size_utils.dart';
@@ -67,7 +66,7 @@ class CreateWalletOptionScreen extends StatelessWidget {
                               color: ColorUtils.white,
                               fontSize: 16),
                           onTap: () {
-                            Get.to(() => SeedOptionScreen(), transition: Transition.cupertino);
+                            Get.to(() => const SeedOptionScreen(), transition: Transition.cupertino);
                           }),
                       Space.vertical(12.h),
                       Btn(
@@ -77,7 +76,7 @@ class CreateWalletOptionScreen extends StatelessWidget {
                           child: TextUtils.txt(
                               text: "Import Wallet", fontSize: 16),
                           onTap: () {
-                            Get.to(() => ExistingSeedScreen(), transition: Transition.cupertino);
+                            Get.to(() => const ExistingSeedScreen(), transition: Transition.cupertino);
                           }),
                     ],
                   ),

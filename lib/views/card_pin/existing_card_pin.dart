@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skey/controllers/pop_up_controller.dart';
@@ -11,7 +10,6 @@ import 'package:skey/utils/color_utils.dart';
 import 'package:skey/utils/size_utils.dart';
 import 'package:skey/utils/text_utils.dart';
 import 'package:skey/utils/toast_utils.dart';
-import 'package:skey/views/create_wallet_options/create_wallet_option.dart';
 import 'package:skey/views/wallet/wallet_screen.dart';
 import 'package:skey/widgets/appBar_widget.dart';
 import 'package:skey/widgets/btn_widget.dart';
@@ -51,7 +49,7 @@ class _ExistingCardPinScreenState extends State<ExistingCardPinScreen> {
           controller.content.value = "Error";
           print('Error: $error');
         }, onDone: () async {
-          Future.delayed(Duration(seconds: 1), () async {
+          Future.delayed(const Duration(seconds: 1), () async {
             print('Stream has ended.');
             await controller.eventSubscription.value?.cancel();
             controller.closePopup();
@@ -119,7 +117,7 @@ class _ExistingCardPinScreenState extends State<ExistingCardPinScreen> {
                                   await Preferences.storeAddress(address: result['address']);
                                   Get.to(() => WalletScreen(),
                                       transition: Transition.circularReveal,
-                                      duration: Duration(seconds: 1));
+                                      duration: const Duration(seconds: 1));
                                 }
                               } catch (e) {
                                 print(e);

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:skey/utils/size_utils.dart';
 import 'package:skey/views/card_setup_success/card_setup_sucess.dart';
-import 'package:skey/views/wallet/wallet_screen.dart';
 
 import '../../utils/color_utils.dart';
 import '../../utils/text_utils.dart';
@@ -83,14 +81,14 @@ class PersonalInfoScreen extends StatelessWidget {
                           // if(formKey.currentState!.validate()){
                           //
                           // }
-                          Get.offAll(() => CardSetupSucessScreen(),
+                          Get.offAll(() => const CardSetupSucessScreen(),
                               transition: Transition.circularReveal,
-                              duration: Duration(seconds: 1));
+                              duration: const Duration(seconds: 1));
                         }),
                   ],
                 ),
               ),
-              AppBarWidget(title: "Register Yourself")
+              const AppBarWidget(title: "Register Yourself")
             ],
           ),
         ),

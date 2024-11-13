@@ -59,7 +59,14 @@ import BigInt
             }
             }else if(call.method == "unpairCard"){
                 self?.unpairCard(result: result)
+            }else if(call.method == "changePin"){
+                if let args = call.arguments as? [String : Any] {
+                    self?.changePin(result: result, args: args)
             }else{
+                result("error")
+                return
+            }
+            } else{
                 result(FlutterMethodNotImplemented)
                 return
             }
@@ -276,6 +283,29 @@ import BigInt
                 }else{
                     result("Not Paired")
                 }
+            } catch let error {
+                // Card not detected - timeout
+                print(error.localizedDescription)
+                NFCHelper.getInstance().stopDetector(errorMessage: error.localizedDescription)
+                result("error")
+            }
+        }
+
+    }
+    private func changePin(result: @escaping FlutterResult, args: [String : Any]) {
+        self.result = result
+        //    nfcSession = NFCNDEFReaderSession(delegate: self, queue: nil, invalidateAfterFirstRead: false)
+        //    nfcSession?.begin()
+        NFCHelper.getInstance().waitForCommunication() { communication in
+            do {
+                // Card detected
+                // Execute in background thread to not block main thread ...
+                var manager =  try BchainManager.build(communication: communication)
+                try manager.connect()
+                try manager.verifyPin(args["oldPin"])
+                try manager.changePin(args["newPin"])
+                NFCHelper.getInstance().stopDetector(successMessage: "Pin Changed")
+                result("success")
             } catch let error {
                 // Card not detected - timeout
                 print(error.localizedDescription)
